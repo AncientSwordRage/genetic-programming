@@ -40,16 +40,18 @@ import com.lagodiuk.gp.symbolic.interpreter.Functions;
 public class Main {
 
 	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+	
+	private static final int ITERATIONS_GRANULARITY = 300;
 
 	private static FileInputStream fileIn;
 
-	private static PrintWriter fileOut;
+	private static PrintWriter     fileOut;
 
-	private static int iteration = 1;
+	private static int     iteration = 1;
 
-	private static boolean evolved = false;
+	private static boolean evolved   = false;
 
-	private static double threshold = 10;
+	private static double  threshold = 10;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Symbolic regression solver");
@@ -58,7 +60,7 @@ public class Main {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(fileIn));
 
 		List<Function> functions = getFunctions(inputReader);
-		List<String> variables = getVariables(inputReader);
+		List<String>   variables = getVariables(inputReader);
 		TabulatedFunctionFitness fitness = getTrainingData(inputReader, variables);
 
 		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitness, variables, functions);
@@ -90,11 +92,11 @@ public class Main {
 		outPrintln(String.format("Start time is: %s", new Date()));
 
 		BufferedReader systemIn = new BufferedReader(new InputStreamReader(System.in));
-		while (true) {
-			engine.evolve(50);
+		for(;;) {
+			engine.evolve(ITERATIONS_GRANULARITY);
 			boolean terminate = true;
 			if (!evolved) {
-				System.out.println("Continue? (50 iterations) Y/N (don't forget to press Enter)");
+				System.out.println("Continue? (" + ITERATIONS_GRANULARITY + " iterations) Y/N (don't forget to press Enter)");
 				String s = systemIn.readLine();
 				if ("y".equalsIgnoreCase(s)) {
 					terminate = false;
