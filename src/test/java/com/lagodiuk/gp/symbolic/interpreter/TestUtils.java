@@ -47,7 +47,7 @@ public class TestUtils {
 	}
 
 	public static <T> List<T> list(T... elements) {
-		List<T> list = new LinkedList<T>();
+		List<T> list = new LinkedList<>();
 		for (T elem : elements) {
 			list.add(elem);
 		}
@@ -55,7 +55,7 @@ public class TestUtils {
 	}
 
 	public static <T> Set<T> setFromArray(T... elements) {
-		Set<T> list = new HashSet<T>();
+		Set<T> list = new HashSet<>();
 		for (T elem : elements) {
 			list.add(elem);
 		}

@@ -24,7 +24,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
 public class TabulatedFunctionFitness implements ExpressionFitness {
 
-	private List<Target> targets = new LinkedList<Target>();
+	private List<Target> targets = new LinkedList<>();
 
 	public TabulatedFunctionFitness(Target... targets) {
 		for (Target target : targets) {

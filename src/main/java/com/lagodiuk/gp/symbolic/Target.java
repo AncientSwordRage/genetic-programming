@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Target {
-	private Map<String, Double> contextState = new HashMap<String, Double>();
+	private Map<String, Double> contextState = new HashMap<>();
 	private double targetValue;
 
 	public Target() {

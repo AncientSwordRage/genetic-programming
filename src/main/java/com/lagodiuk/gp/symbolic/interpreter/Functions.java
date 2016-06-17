@@ -88,7 +88,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -136,7 +136,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -190,7 +190,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -245,7 +245,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -300,7 +300,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -355,7 +355,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -409,7 +409,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -467,7 +467,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -521,7 +521,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override
@@ -575,7 +575,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return new LinkedList<Double>();
+			return new LinkedList<>();
 		}
 
 		@Override

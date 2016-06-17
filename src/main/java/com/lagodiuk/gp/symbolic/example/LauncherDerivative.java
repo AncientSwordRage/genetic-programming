@@ -58,7 +58,7 @@ public class LauncherDerivative {
 	}
 
 	private static <T> List<T> list(T... items) {
-		List<T> list = new LinkedList<T>();
+		List<T> list = new LinkedList<>();
 		for (T item : items) {
 			list.add(item);
 		}

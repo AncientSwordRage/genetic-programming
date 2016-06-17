@@ -105,14 +105,14 @@ public class SyntaxTreeUtilsTest {
 		context.setVariable("y", 0);
 
 		for (int maxDepth = 0; maxDepth < 7; maxDepth++) {
-			Set<Integer> depths = new HashSet<Integer>();
+			Set<Integer> depths = new HashSet<>();
 			for (int i = 0; i < 100; i++) {
 				Expression tree = SyntaxTreeUtils.createTree(maxDepth, context);
 				int currDepth = calculateDepth(tree);
 				depths.add(currDepth);
 			}
 
-			Set<Integer> target = new HashSet<Integer>();
+			Set<Integer> target = new HashSet<>();
 			for (int i = 0; i < (maxDepth + 1); i++) {
 				target.add(i);
 			}

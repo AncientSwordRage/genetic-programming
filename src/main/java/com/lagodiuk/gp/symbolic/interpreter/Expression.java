@@ -23,9 +23,9 @@ import java.util.List;
 
 public class Expression implements Cloneable {
 
-	private List<Expression> childs = new ArrayList<Expression>();
+	private List<Expression> childs = new ArrayList<>();
 
-	private List<Double> coefficients = new ArrayList<Double>();
+	private List<Double> coefficients = new ArrayList<>();
 
 	private String variable;
 
@@ -112,7 +112,7 @@ public class Expression implements Cloneable {
 	}
 
 	public List<Double> getCoefficientsOfTree() {
-		LinkedList<Double> coefficients = new LinkedList<Double>();
+		LinkedList<Double> coefficients = new LinkedList<>();
 		this.getCoefficientsOfTree(coefficients);
 		Collections.reverse(coefficients);
 		return coefficients;
@@ -144,7 +144,7 @@ public class Expression implements Cloneable {
 	}
 
 	public List<Expression> getAllNodesAsList() {
-		List<Expression> nodes = new LinkedList<Expression>();
+		List<Expression> nodes = new LinkedList<>();
 		this.getAllNodesBreadthFirstSearch(nodes);
 		return nodes;
 	}

@@ -122,7 +122,7 @@ public class Main {
 	}
 
 	private static List<String> getVariables(BufferedReader inputReader) throws Exception {
-		List<String> variables = new ArrayList<String>();
+		List<String> variables = new ArrayList<>();
 		String s = inputReader.readLine();
 		while ((s.startsWith("#")) || (s.trim().isEmpty())) {
 			s = inputReader.readLine();
@@ -135,7 +135,7 @@ public class Main {
 	}
 
 	private static List<Function> getFunctions(BufferedReader inputReader) throws Exception {
-		Set<Function> functions = new HashSet<Function>();
+		Set<Function> functions = new HashSet<>();
 		functions.add(Functions.CONSTANT);
 		functions.add(Functions.VARIABLE);
 		String s = inputReader.readLine();
@@ -146,13 +146,13 @@ public class Main {
 			Function f = Functions.valueOf(functionName);
 			functions.add(f);
 		}
-		List<Function> functionsList = new ArrayList<Function>(functions);
+		List<Function> functionsList = new ArrayList<>(functions);
 		return functionsList;
 	}
 
 	private static TabulatedFunctionFitness getTrainingData(
 			BufferedReader inputReader, List<String> variables) throws Exception {
-		List<Target> targets = new LinkedList<Target>();
+		List<Target> targets = new LinkedList<>();
 		String s = inputReader.readLine();
 		while ((s.startsWith("#")) || (s.trim().isEmpty())) {
 			s = inputReader.readLine();

@@ -47,7 +47,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 	@Override
 	public List<GpChromosome> crossover(GpChromosome anotherChromosome) {
-		List<GpChromosome> ret = new ArrayList<GpChromosome>(2);
+		List<GpChromosome> ret = new ArrayList<>(2);
 
 		GpChromosome thisClone = new GpChromosome(this.context, this.fitnessFunction, this.syntaxTree.clone());
 		GpChromosome anotherClone = new GpChromosome(this.context, this.fitnessFunction, anotherChromosome.syntaxTree.clone());
@@ -155,7 +155,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 				mutatingNode.getChilds().add(SyntaxTreeUtils.createTree(1, this.context));
 			}
 		} else if (functionArgumentsCount < mutatingNodeChildsCount) {
-			List<Expression> subList = new ArrayList<Expression>(functionArgumentsCount);
+			List<Expression> subList = new ArrayList<>(functionArgumentsCount);
 			for (int i = 0; i < functionArgumentsCount; i++) {
 				subList.add(mutatingNode.getChilds().get(i));
 			}
@@ -169,7 +169,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 				mutatingNode.addCoefficient(this.context.getRandomValue());
 			}
 		} else if (functionCoefficientsCount < mutatingNodeCoefficientsCount) {
-			List<Double> subList = new ArrayList<Double>(functionCoefficientsCount);
+			List<Double> subList = new ArrayList<>(functionCoefficientsCount);
 			for (int i = 0; i < functionCoefficientsCount; i++) {
 				subList.add(mutatingNode.getCoefficientsOfNode().get(i));
 			}
@@ -248,7 +248,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 		if (coefficientsOfTree.size() > 0) {
 			CoefficientsChromosome initialChromosome = new CoefficientsChromosome(coefficientsOfTree, 0.6, 0.8);
-			Population<CoefficientsChromosome> population = new Population<CoefficientsChromosome>();
+			Population<CoefficientsChromosome> population = new Population<>();
 			for (int i = 0; i < 5; i++) {
 				population.addChromosome(initialChromosome.mutate());
 			}
@@ -256,7 +256,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 			Fitness<CoefficientsChromosome, Double> fit = new CoefficientsFitness();
 
-			GeneticAlgorithm<CoefficientsChromosome, Double> env = new GeneticAlgorithm<GpChromosome.CoefficientsChromosome, Double>(population, fit);
+			GeneticAlgorithm<CoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
 
 			env.evolve(iterations);
 
@@ -294,7 +294,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 		@Override
 		public List<CoefficientsChromosome> crossover(CoefficientsChromosome anotherChromosome) {
-			List<CoefficientsChromosome> ret = new ArrayList<GpChromosome.CoefficientsChromosome>(2);
+			List<CoefficientsChromosome> ret = new ArrayList<>(2);
 
 			CoefficientsChromosome thisClone = this.clone();
 			CoefficientsChromosome anotherClone = anotherChromosome.clone();
@@ -326,7 +326,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 		@Override
 		protected CoefficientsChromosome clone() {
-			List<Double> ret = new ArrayList<Double>(this.coefficients.size());
+			List<Double> ret = new ArrayList<>(this.coefficients.size());
 			for (double d : this.coefficients) {
 				ret.add(d);
 			}

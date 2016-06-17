@@ -35,11 +35,11 @@ public class Context {
 
 	private double maxMutationValue = 3;
 
-	private Map<String, Double> variables = new HashMap<String, Double>();
+	private Map<String, Double> variables = new HashMap<>();
 
-	private List<Function> nonTerminalFunctions = new ArrayList<Function>();
+	private List<Function> nonTerminalFunctions = new ArrayList<>();
 
-	private List<Function> terminalFunctions = new ArrayList<Function>();
+	private List<Function> terminalFunctions = new ArrayList<>();
 
 	private int nextRndFunctionIndx = 0;
 
