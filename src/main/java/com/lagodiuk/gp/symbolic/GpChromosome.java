@@ -15,22 +15,22 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import com.lagodiuk.ga.Chromosome;
-import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Fitness;
+import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Population;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Function;
 import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 class GpChromosome implements Chromosome<GpChromosome> {
 
+	private static final int OPTIMIZING_TREE_ITERATIONS = 70;
 	private Expression syntaxTree;
 
 	private Context context;
@@ -236,16 +236,20 @@ class GpChromosome implements Chromosome<GpChromosome> {
 	}
 
 	public void optimizeTree() {
-		this.optimizeTree(70);
+		this.optimizeTree(OPTIMIZING_TREE_ITERATIONS);
 	}
 
 	public void optimizeTree(int iterations) {
 
 		SyntaxTreeUtils.cutTree(this.syntaxTree, this.context, 6);
 		SyntaxTreeUtils.simplifyTree(this.syntaxTree, this.context);
-
+		
+		optimizeCoefficients(iterations);
+	}
+	
+	public void optimizeCoefficients(int iterations) {
 		List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
-
+		
 		if (coefficientsOfTree.size() > 0) {
 			CoefficientsChromosome initialChromosome = new CoefficientsChromosome(coefficientsOfTree, 0.6, 0.8);
 			Population<CoefficientsChromosome, Double> population = new Population<>();
@@ -264,6 +268,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 			this.syntaxTree.setCoefficientsOfTree(optimizedCoefficients);
 		}
+		
 	}
 
 	public Context getContext() {
@@ -288,8 +293,8 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 		public CoefficientsChromosome(List<Double> coefficients, double pMutation, double pCrossover) {
 			this.coefficients = coefficients;
-			this.pMutation = pMutation;
-			this.pCrossover = pCrossover;
+			this.pMutation    = pMutation;
+			this.pCrossover   = pCrossover;
 		}
 
 		@Override

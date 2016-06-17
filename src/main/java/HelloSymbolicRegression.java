@@ -14,7 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
-import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;

@@ -15,21 +15,19 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.lagodiuk.gp.symbolic.interpreter.Context;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-
 public class TabulatedFunctionFitness implements ExpressionFitness {
 
-	private List<Target> targets = new LinkedList<>();
+	private final List<Target> targets = new LinkedList<>();
 
 	public TabulatedFunctionFitness(Target... targets) {
-		for (Target target : targets) {
-			this.targets.add(target);
-		}
+		this.targets.addAll(Arrays.asList(targets));
 	}
 
 	public TabulatedFunctionFitness(List<Target> targets) {

@@ -21,12 +21,10 @@ import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.powExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.subExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.variableExpr;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashSet;
 import java.util.Set;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class SyntaxTreeUtilsTest {

@@ -21,11 +21,9 @@ import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.list;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.subExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.variableExpr;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.junit.Test;
 
 public class SyntaxTreeTest {

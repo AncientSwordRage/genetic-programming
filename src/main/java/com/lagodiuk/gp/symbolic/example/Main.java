@@ -15,6 +15,13 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.example;
 
+import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
+import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
+import com.lagodiuk.gp.symbolic.Target;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.Function;
+import com.lagodiuk.gp.symbolic.interpreter.Functions;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,14 +36,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
-import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
-import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
-import com.lagodiuk.gp.symbolic.Target;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Function;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
-
 public class Main {
 
 	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
@@ -46,6 +45,15 @@ public class Main {
 	private static FileInputStream fileIn;
 
 	private static PrintWriter     fileOut;
+	
+	static {
+		try
+		{
+			fileIn  = new FileInputStream("bin\\_in.txt");
+			fileOut = new PrintWriter("bin\\_out.txt");
+		} catch(FileNotFoundException ex) {
+		}
+	}
 
 	private static int     iteration = 1;
 

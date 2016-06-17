@@ -15,27 +15,26 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import java.util.Collection;
-import java.util.List;
-
-import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Fitness;
+import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Population;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Function;
 import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
-import com.lagodiuk.ga.IterationListener;
+import java.util.Collection;
+import java.util.List;
 
 public class SymbolicRegressionEngine {
 
 	private static final int INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT = 1;
 
-	private static final int DEFAULT_POPULATION_SIZE = 5;
+	private static final int DEFAULT_POPULATION_SIZE = 15;
 
 	private static final int MAX_INITIAL_TREE_DEPTH = 1;
 
 	private final GeneticAlgorithm<GpChromosome, Double> environment;
+	private final SymbolicRegressionFitness fitnessFunction;
 
 	private final Context context;
 
@@ -44,10 +43,11 @@ public class SymbolicRegressionEngine {
 	public SymbolicRegressionEngine(ExpressionFitness expressionFitness, Collection<String> variables, List<? extends Function> baseFunctions) {
 		this.context = new Context(baseFunctions, variables);
 		this.expressionFitness = expressionFitness;
-		SymbolicRegressionFitness fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
-		Population<GpChromosome, Double> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
+		this.fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
+		final Population<GpChromosome, Double> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunction);
 		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
+		this.environment.setAsync(true);
 	}
 
 	private Population<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {

@@ -15,15 +15,14 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.example;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.lagodiuk.gp.symbolic.DerivativeFitness;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Functions;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LauncherDerivative {
 
