@@ -248,7 +248,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 		if (coefficientsOfTree.size() > 0) {
 			CoefficientsChromosome initialChromosome = new CoefficientsChromosome(coefficientsOfTree, 0.6, 0.8);
-			Population<CoefficientsChromosome> population = new Population<>();
+			Population<CoefficientsChromosome, Double> population = new Population<>();
 			for (int i = 0; i < 5; i++) {
 				population.addChromosome(initialChromosome.mutate());
 			}

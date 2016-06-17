@@ -45,13 +45,13 @@ public class SymbolicRegressionEngine {
 		this.context = new Context(baseFunctions, variables);
 		this.expressionFitness = expressionFitness;
 		SymbolicRegressionFitness fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
-		Population<GpChromosome> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
+		Population<GpChromosome, Double> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunction);
 		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
 	}
 
-	private Population<GpChromosome> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {
-		Population<GpChromosome> population = new Population<>();
+	private Population<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {
+		Population<GpChromosome, Double> population = new Population<>();
 		for (int i = 0; i < populationSize; i++) {
 			GpChromosome chromosome =
 					new GpChromosome(context, fitnessFunction, SyntaxTreeUtils.createTree(MAX_INITIAL_TREE_DEPTH, context));
