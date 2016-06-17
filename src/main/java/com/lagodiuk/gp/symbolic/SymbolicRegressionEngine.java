@@ -61,11 +61,9 @@ public class SymbolicRegressionEngine {
 	}
 
 	public void addIterationListener(final SymbolicRegressionIterationListener listener) {
-		this.environment.addIterationListener(new IterartionListener<GpChromosome, Double>() {
-			@Override
-			public void update(GeneticAlgorithm<GpChromosome, Double> environment) {
-				listener.update(SymbolicRegressionEngine.this);
-			}
+		this.environment.addIterationListener((GeneticAlgorithm<GpChromosome, Double> environment1) ->
+		{
+			listener.update(SymbolicRegressionEngine.this);
 		});
 	}
 

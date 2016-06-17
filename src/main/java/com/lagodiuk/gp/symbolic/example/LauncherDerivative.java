@@ -23,6 +23,7 @@ import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Functions;
+import java.util.Arrays;
 
 public class LauncherDerivative {
 
@@ -59,9 +60,7 @@ public class LauncherDerivative {
 
 	private static <T> List<T> list(T... items) {
 		List<T> list = new LinkedList<>();
-		for (T item : items) {
-			list.add(item);
-		}
+		list.addAll(Arrays.asList(items));
 		return list;
 	}
 

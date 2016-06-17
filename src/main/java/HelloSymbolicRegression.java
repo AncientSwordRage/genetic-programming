@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import java.util.LinkedList;
-import java.util.List;
-
 import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Functions;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * f(x) - ? <br/>
@@ -69,24 +68,15 @@ public class HelloSymbolicRegression {
 	 * Track each iteration
 	 */
 	private static void addListener(SymbolicRegressionEngine engine) {
-		engine.addIterationListener(new SymbolicRegressionIterationListener() {
-			@Override
-			public void update(SymbolicRegressionEngine engine) {
-
-				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-
-				double currFitValue = engine.fitness(bestSyntaxTree);
-
-				// log to console
-				System.out.println(
-						String.format("iter = %s \t fit = %s \t func = %s",
-								engine.getIteration(), currFitValue, bestSyntaxTree.print()));
-
-				// halt condition
-				if (currFitValue < 5) {
-					engine.terminate();
-				}
-			}
+		engine.addIterationListener((SymbolicRegressionEngine engine1) ->
+		{
+			Expression bestSyntaxTree = engine1.getBestSyntaxTree();
+			double currFitValue = engine1.fitness(bestSyntaxTree);
+			// log to console
+			System.out.println(String.format("iter = %s \t fit = %s \t func = %s", engine1.getIteration(), currFitValue, bestSyntaxTree.print()));
+			// halt condition
+			if(currFitValue < 5)
+				engine1.terminate();
 		});
 	}
 
