@@ -25,21 +25,21 @@ import java.util.Random;
 
 public class Context {
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
-	private double minValue = -50;
+	private final double minValue = -50;
 
-	private double maxValue = 50;
+	private final double maxValue = 50;
 
-	private double minMutationValue = -3;
+	private final double minMutationValue = -3;
 
-	private double maxMutationValue = 3;
+	private final double maxMutationValue = 3;
 
-	private Map<String, Double> variables = new HashMap<>();
+	private final Map<String, Double> variables = new HashMap<>();
 
-	private List<Function> nonTerminalFunctions = new ArrayList<>();
+	private final List<Function> nonTerminalFunctions = new ArrayList<>();
 
-	private List<Function> terminalFunctions = new ArrayList<>();
+	private final List<Function> terminalFunctions = new ArrayList<>();
 
 	private int nextRndFunctionIndx = 0;
 

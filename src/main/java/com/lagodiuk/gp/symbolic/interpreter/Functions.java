@@ -21,7 +21,7 @@ import java.util.List;
 public enum Functions implements Function {
 
 	CONSTANT {
-		private int coefficientsCount = 1;
+		private final int coefficientsCount = 1;
 
 		@Override
 		public int argumentsCount() {
@@ -79,7 +79,7 @@ public enum Functions implements Function {
 		}
 	},
 	VARIABLE {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -127,7 +127,7 @@ public enum Functions implements Function {
 		}
 	},
 	ADD {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -181,7 +181,7 @@ public enum Functions implements Function {
 		}
 	},
 	SUB {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -236,7 +236,7 @@ public enum Functions implements Function {
 		}
 	},
 	MUL {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -291,7 +291,7 @@ public enum Functions implements Function {
 		}
 	},
 	DIV {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -346,7 +346,7 @@ public enum Functions implements Function {
 		}
 	},
 	SQRT {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -400,7 +400,7 @@ public enum Functions implements Function {
 		}
 	},
 	POW {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -456,9 +456,9 @@ public enum Functions implements Function {
 		}
 	},
 	LN {
-		private double threshold = 1e-5;
+		private final double threshold = 1e-5;
 
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -512,7 +512,7 @@ public enum Functions implements Function {
 		}
 	},
 	SIN {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {
@@ -566,7 +566,7 @@ public enum Functions implements Function {
 		}
 	},
 	COS {
-		private int coefficientsCount = 0;
+		private final int coefficientsCount = 0;
 
 		@Override
 		public int coefficientsCount() {

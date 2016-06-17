@@ -35,9 +35,9 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 	private Context context;
 
-	private Fitness<GpChromosome, Double> fitnessFunction;
+	private final Fitness<GpChromosome, Double> fitnessFunction;
 
-	private Random random = new Random();
+	private final Random random = new Random();
 
 	public GpChromosome(Context context, Fitness<GpChromosome, Double> fitnessFunction, Expression syntaxTree) {
 		this.context = context;
@@ -280,11 +280,11 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 	private class CoefficientsChromosome implements Chromosome<CoefficientsChromosome>, Cloneable {
 
-		private double pMutation;
+		private final double pMutation;
 
-		private double pCrossover;
+		private final double pCrossover;
 
-		private List<Double> coefficients;
+		private final List<Double> coefficients;
 
 		public CoefficientsChromosome(List<Double> coefficients, double pMutation, double pCrossover) {
 			this.coefficients = coefficients;

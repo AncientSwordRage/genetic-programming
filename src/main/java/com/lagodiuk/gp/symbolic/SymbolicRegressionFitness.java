@@ -21,7 +21,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
 class SymbolicRegressionFitness implements Fitness<GpChromosome, Double> {
 
-	private ExpressionFitness expressionFitness;
+	private final ExpressionFitness expressionFitness;
 
 	public SymbolicRegressionFitness(ExpressionFitness expressionFitness) {
 		this.expressionFitness = expressionFitness;

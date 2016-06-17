@@ -35,11 +35,11 @@ public class SymbolicRegressionEngine {
 
 	private static final int MAX_INITIAL_TREE_DEPTH = 1;
 
-	private GeneticAlgorithm<GpChromosome, Double> environment;
+	private final GeneticAlgorithm<GpChromosome, Double> environment;
 
-	private Context context;
+	private final Context context;
 
-	private ExpressionFitness expressionFitness;
+	private final ExpressionFitness expressionFitness;
 
 	public SymbolicRegressionEngine(ExpressionFitness expressionFitness, Collection<String> variables, List<? extends Function> baseFunctions) {
 		this.context = new Context(baseFunctions, variables);

@@ -39,7 +39,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class Main {
 
-	private static NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 
 	private static FileInputStream fileIn;
 
