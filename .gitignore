@@ -1,29 +1,82 @@
-#
-# Java
-#
-*.class
-*.jar
+# Subversion
+.svn
 
-#
-# Compiled files directory
-#
+## IDEs ##
+
+# Android Studio
+*.apk
+*.ap_
+*.dex
+bin/
+gen/
+out/
+.navigation/
+proguard/
+/local.properties
+/captures
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Netbeans IDE
+nbproject/
+nbactions.xml
+nb-configuration.xml
+
+# Eclipse stuff
+.classpath
+.project
+.settings/
+
+# vim
+.*.sw[a-p]
+
+## Build systems ##
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# We use maven!
+build.xml
+
+# Maven
+dependency-reduced-pom.xml
 target/
 
-#
-# Eclipse
-#
-.settings/
-.metadata/
-.project
-.springBeans
-.classpath
-*.local.properties
-*.log
-*.log.*
+# Gradle
+!gradle-wrapper.jar
+.gradle
+build/
+gradle-app.setting
+.gradletasknamecache
 
-#
-# OS generated files
-#
-.DS_Store
-Icon?
-Thumbs.db
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Various other potential build files
+*.class
+build/
+bin/
+dist/
+manifest.mf
+
+## Other files ##
+
+# Mac filesystem dust
+.DS_Store/
+
+# Logs
+*.log*
+hs_err_pid*
+
+# Keystore files
+*.jks
+
+# delombok
+*/src/main/lombok
+
