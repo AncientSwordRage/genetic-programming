@@ -64,11 +64,9 @@ public enum Functions implements Function {
 		@Override
 		public String print(Expression expression) {
 			double retVal = expression.getCoefficientsOfNode().get(0);
-			String retStr = null;
+			String retStr = String.format("%.3e", retVal);
 			if (retVal < 0) {
-				retStr = String.format("(%s)", retVal);
-			} else {
-				retStr = "" + retVal;
+				retStr = "(" + retStr + ")";
 			}
 			return retStr;
 		}

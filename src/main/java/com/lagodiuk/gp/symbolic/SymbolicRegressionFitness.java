@@ -30,8 +30,7 @@ class SymbolicRegressionFitness implements Fitness<GpChromosome, Double> {
 	@Override
 	public Double calculate(GpChromosome chromosome) {
 		Expression expression = chromosome.getSyntaxTree();
-		Context context = chromosome.getContext();
+		Context    context    = chromosome.getContext();
 		return this.expressionFitness.fitness(expression, context);
 	}
-
 }

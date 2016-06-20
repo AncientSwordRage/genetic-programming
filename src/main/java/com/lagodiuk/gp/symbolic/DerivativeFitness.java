@@ -20,13 +20,13 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
 public abstract class DerivativeFitness implements ExpressionFitness {
 
-	private double left = -10;
+	private double left  = -10;
 
 	private double right = 10;
 
-	private double dx = 1e-5;
+	private double dx    = 1e-5;
 
-	private double step = 1;
+	private double step  = 1;
 
 	public abstract double f(double x);
 

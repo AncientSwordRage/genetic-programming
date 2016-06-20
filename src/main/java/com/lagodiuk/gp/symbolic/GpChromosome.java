@@ -30,14 +30,13 @@ import java.util.Random;
 
 class GpChromosome implements Chromosome<GpChromosome> {
 
-	private static final int OPTIMIZING_TREE_ITERATIONS = 70;
+	private final static int OPTIMIZING_TREE_ITERATIONS = 70;
 	private Expression syntaxTree;
-
-	private Context context;
 
 	private final Fitness<GpChromosome, Double> fitnessFunction;
 
-	private final Random random = new Random();
+	Context context;
+	final Random random = new Random();
 
 	public GpChromosome(Context context, Fitness<GpChromosome, Double> fitnessFunction, Expression syntaxTree) {
 		this.context = context;
@@ -49,13 +48,13 @@ class GpChromosome implements Chromosome<GpChromosome> {
 	public List<GpChromosome> crossover(GpChromosome anotherChromosome) {
 		List<GpChromosome> ret = new ArrayList<>(2);
 
-		GpChromosome thisClone = new GpChromosome(this.context, this.fitnessFunction, this.syntaxTree.clone());
+		GpChromosome thisClone    = new GpChromosome(this.context, this.fitnessFunction, this.syntaxTree.clone());
 		GpChromosome anotherClone = new GpChromosome(this.context, this.fitnessFunction, anotherChromosome.syntaxTree.clone());
 
-		Expression thisRandomNode = this.getRandomNode(thisClone.syntaxTree);
+		Expression thisRandomNode    = this.getRandomNode(thisClone.syntaxTree);
 		Expression anotherRandomNode = this.getRandomNode(anotherClone.syntaxTree);
 
-		Expression thisRandomSubTreeClone = thisRandomNode.clone();
+		Expression thisRandomSubTreeClone    = thisRandomNode.clone();
 		Expression anotherRandomSubTreeClone = anotherRandomNode.clone();
 
 		this.swapNode(thisRandomNode, anotherRandomSubTreeClone);
@@ -124,21 +123,12 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
 		Function oldFunction = mutatingNode.getFunction();
-		Function newFunction = null;
+		Function newFunction = oldFunction;
 
-		// trying to avoid case, when newFunction == oldFunction
-		// hope, that in one of 3 iterations - we'll get
-		// newFunction which != oldFunction
-		for (int i = 0; i < 3; i++) {
-			if (this.random.nextDouble() > 0.5) {
-				newFunction = this.context.getRandomNonTerminalFunction();
-			} else {
-				newFunction = this.context.getRandomTerminalFunction();
-			}
-
-			if (newFunction != oldFunction) {
-				break;
-			}
+		while(newFunction == oldFunction) {
+			newFunction = (this.random.nextDouble() > 0.5)
+				? this.context.getRandomNonTerminalFunction()
+				: this.context.getRandomTerminalFunction();
 		}
 
 		mutatingNode.setFunction(newFunction);
@@ -251,16 +241,16 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
 		
 		if (coefficientsOfTree.size() > 0) {
-			CoefficientsChromosome initialChromosome = new CoefficientsChromosome(coefficientsOfTree, 0.6, 0.8);
-			Population<CoefficientsChromosome, Double> population = new Population<>();
+			GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree, 0.6, 0.8);
+			Population<GpCoefficientsChromosome, Double> population = new Population<>();
 			for (int i = 0; i < 5; i++) {
-				population.addChromosome(initialChromosome.mutate());
+				population.addChromosome(coefficients.mutate());
 			}
-			population.addChromosome(initialChromosome);
+			population.addChromosome(coefficients);
 
-			Fitness<CoefficientsChromosome, Double> fit = new CoefficientsFitness();
+			Fitness<GpCoefficientsChromosome, Double> fit = new CoefficientsFitness();
 
-			GeneticAlgorithm<CoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
+			GeneticAlgorithm<GpCoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
 
 			env.evolve(iterations);
 
@@ -283,75 +273,12 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		return this.syntaxTree;
 	}
 
-	private class CoefficientsChromosome implements Chromosome<CoefficientsChromosome>, Cloneable {
-
-		private final double pMutation;
-
-		private final double pCrossover;
-
-		private final List<Double> coefficients;
-
-		public CoefficientsChromosome(List<Double> coefficients, double pMutation, double pCrossover) {
-			this.coefficients = coefficients;
-			this.pMutation    = pMutation;
-			this.pCrossover   = pCrossover;
-		}
+	private class CoefficientsFitness implements Fitness<GpCoefficientsChromosome, Double> {
 
 		@Override
-		public List<CoefficientsChromosome> crossover(CoefficientsChromosome anotherChromosome) {
-			List<CoefficientsChromosome> ret = new ArrayList<>(2);
-
-			CoefficientsChromosome thisClone = this.clone();
-			CoefficientsChromosome anotherClone = anotherChromosome.clone();
-
-			for (int i = 0; i < thisClone.coefficients.size(); i++) {
-				if (GpChromosome.this.random.nextDouble() > this.pCrossover) {
-					thisClone.coefficients.set(i, anotherChromosome.coefficients.get(i));
-					anotherClone.coefficients.set(i, this.coefficients.get(i));
-				}
-			}
-			ret.add(thisClone);
-			ret.add(anotherClone);
-
-			return ret;
-		}
-
-		@Override
-		public CoefficientsChromosome mutate() {
-			CoefficientsChromosome ret = this.clone();
-			for (int i = 0; i < ret.coefficients.size(); i++) {
-				if (GpChromosome.this.random.nextDouble() > this.pMutation) {
-					double coeff = ret.coefficients.get(i);
-					coeff += GpChromosome.this.context.getRandomMutationValue();
-					ret.coefficients.set(i, coeff);
-				}
-			}
-			return ret;
-		}
-
-		@Override
-		protected CoefficientsChromosome clone() {
-			List<Double> ret = new ArrayList<>(this.coefficients.size());
-			for (double d : this.coefficients) {
-				ret.add(d);
-			}
-			return new CoefficientsChromosome(ret, this.pMutation, this.pCrossover);
-		}
-
-		public List<Double> getCoefficients() {
-			return this.coefficients;
-		}
-
-	}
-
-	private class CoefficientsFitness implements Fitness<CoefficientsChromosome, Double> {
-
-		@Override
-		public Double calculate(CoefficientsChromosome chromosome) {
+		public Double calculate(GpCoefficientsChromosome chromosome) {
 			GpChromosome.this.syntaxTree.setCoefficientsOfTree(chromosome.getCoefficients());
 			return GpChromosome.this.fitnessFunction.calculate(GpChromosome.this);
 		}
-
 	}
-
 }

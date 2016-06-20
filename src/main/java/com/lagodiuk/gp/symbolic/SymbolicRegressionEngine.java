@@ -27,23 +27,19 @@ import java.util.List;
 
 public class SymbolicRegressionEngine {
 
-	private static final int INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT = 1;
-
-	private static final int DEFAULT_POPULATION_SIZE = 15;
-
-	private static final int MAX_INITIAL_TREE_DEPTH = 1;
+	private final static int INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT = 1;
+	private final static int DEFAULT_POPULATION_SIZE                  = 5;
+	private final static int MAX_INITIAL_TREE_DEPTH                   = +011;
 
 	private final GeneticAlgorithm<GpChromosome, Double> environment;
-	private final SymbolicRegressionFitness fitnessFunction;
-
-	private final Context context;
-
-	private final ExpressionFitness expressionFitness;
+	private final SymbolicRegressionFitness              fitnessFunction;
+	private final Context                                context;
+	private final ExpressionFitness                      expressionFitness;
 
 	public SymbolicRegressionEngine(ExpressionFitness expressionFitness, Collection<String> variables, List<? extends Function> baseFunctions) {
-		this.context = new Context(baseFunctions, variables);
+		this.context           = new Context(baseFunctions, variables);
 		this.expressionFitness = expressionFitness;
-		this.fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
+		this.fitnessFunction   = new SymbolicRegressionFitness(this.expressionFitness);
 		final Population<GpChromosome, Double> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunction);
 		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
@@ -53,18 +49,17 @@ public class SymbolicRegressionEngine {
 	private Population<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {
 		Population<GpChromosome, Double> population = new Population<>();
 		for (int i = 0; i < populationSize; i++) {
-			GpChromosome chromosome =
-					new GpChromosome(context, fitnessFunction, SyntaxTreeUtils.createTree(MAX_INITIAL_TREE_DEPTH, context));
+			GpChromosome chromosome = new GpChromosome(
+				context,
+				fitnessFunction,
+				SyntaxTreeUtils.createTree(MAX_INITIAL_TREE_DEPTH, context));
 			population.addChromosome(chromosome);
 		}
 		return population;
 	}
 
 	public void addIterationListener(final SymbolicRegressionIterationListener listener) {
-		this.environment.addIterationListener((GeneticAlgorithm<GpChromosome, Double> environment1) ->
-		{
-			listener.update(SymbolicRegressionEngine.this);
-		});
+		this.environment.addIterationListener(env -> listener.update(SymbolicRegressionEngine.this) );
 	}
 
 	public void evolve(int itrationsCount) {
@@ -94,5 +89,4 @@ public class SymbolicRegressionEngine {
 	public void setParentsSurviveCount(int n) {
 		this.environment.setParentChromosomesSurviveCount(n);
 	}
-
 }

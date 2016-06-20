@@ -23,23 +23,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class Context {
+public final class Context {
 
 	private final Random random = new Random();
 
 	private final double minValue = -50;
-
-	private final double maxValue = 50;
+	private final double maxValue =  50;
 
 	private final double minMutationValue = -3;
-
-	private final double maxMutationValue = 3;
+	private final double maxMutationValue =  3;
 
 	private final Map<String, Double> variables = new HashMap<>();
 
 	private final List<Function> nonTerminalFunctions = new ArrayList<>();
-
-	private final List<Function> terminalFunctions = new ArrayList<>();
+	private final List<Function> terminalFunctions    = new ArrayList<>();
 
 	private int nextRndFunctionIndx = 0;
 
@@ -115,15 +112,14 @@ public class Context {
 	}
 
 	public double getRandomValue() {
-		return (this.random.nextDouble() * (this.maxValue - this.minValue)) + this.minValue;
+		return this.minValue + this.random.nextDouble() * (this.maxValue - this.minValue);
 	}
 
 	public double getRandomMutationValue() {
-		return (this.random.nextDouble() * (this.maxMutationValue - this.minMutationValue)) + this.minMutationValue;
+		return this.minMutationValue + this.random.nextDouble() * (this.maxMutationValue - this.minMutationValue);
 	}
 
 	public boolean hasVariables() {
 		return !this.variables.isEmpty();
 	}
-
 }

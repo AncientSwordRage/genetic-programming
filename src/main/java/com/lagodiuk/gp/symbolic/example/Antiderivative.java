@@ -21,7 +21,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
 public class Antiderivative implements ExpressionFitness {
 
-	private static final double dx = 1e-2;
+	private final static double dx = 1e-2;
 
 	@Override
 	public double fitness(Expression expression, Context context) {

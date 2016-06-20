@@ -38,9 +38,9 @@ import java.util.Set;
 
 public class Main {
 
-	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+	private final static NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 	
-	private static final int ITERATIONS_GRANULARITY = 300;
+	private final static int ITERATIONS_GRANULARITY = 300;
 
 	private static FileInputStream fileIn;
 
@@ -50,7 +50,7 @@ public class Main {
 		try
 		{
 			fileIn  = new FileInputStream("bin\\_in.txt");
-			fileOut = new PrintWriter("bin\\_out.txt");
+			fileOut = new PrintWriter    ("bin\\_out.txt");
 		} catch(FileNotFoundException ex) {
 		}
 	}
@@ -75,19 +75,15 @@ public class Main {
 
 		final String prefix = makePrefix(variables);
 		engine.addIterationListener(new SymbolicRegressionIterationListener() {
-			private double prevFitValue = -1;
+			private double prevFitValue = -1.0;
 
 			@Override
 			public void update(SymbolicRegressionEngine engine) {
 				Expression bestSyntaxTree = engine.getBestSyntaxTree();
 				double currFitValue = engine.fitness(bestSyntaxTree);
-				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					outPrintln();
-					outPrintln(prefix + bestSyntaxTree.print());
-				}
 
-				outPrintln(String.format("%s \t %s", iteration, currFitValue));
-				++iteration;
+				outPrintln(String.format("%s\t%8.3f\t# %s%s", iteration, currFitValue, prefix, bestSyntaxTree.print()));
+				iteration += 1;
 				this.prevFitValue = currFitValue;
 				if (currFitValue < threshold) {
 					engine.terminate();
@@ -98,6 +94,7 @@ public class Main {
 
 		outPrintln();
 		outPrintln(String.format("Start time is: %s", new Date()));
+		outPrintln("Iter\tFitness   \tFunction");
 
 		BufferedReader systemIn = new BufferedReader(new InputStreamReader(System.in));
 		for(;;) {
