@@ -97,10 +97,11 @@ public class Expression implements Cloneable {
 	}
 
 	@Override
+	@SuppressWarnings({ "CloneDoesntCallSuperClone", "CloneDeclaresCloneNotSupported" })
 	public Expression clone() {
 		Expression cloned = new Expression(this.function);
 		if (this.variable != null) {
-			cloned.variable = new String(this.variable);
+			cloned.variable = this.variable;
 		}
 		for (Expression c : this.childs) {
 			cloned.childs.add(c.clone());
@@ -112,10 +113,10 @@ public class Expression implements Cloneable {
 	}
 
 	public List<Double> getCoefficientsOfTree() {
-		LinkedList<Double> coefficients = new LinkedList<>();
-		this.getCoefficientsOfTree(coefficients);
-		Collections.reverse(coefficients);
-		return coefficients;
+		LinkedList<Double> result = new LinkedList<>();
+		this.getCoefficientsOfTree(result);
+		Collections.reverse(result);
+		return result;
 	}
 
 	private void getCoefficientsOfTree(Deque<Double> coefficients) {
@@ -166,5 +167,4 @@ public class Expression implements Cloneable {
 			}
 		}
 	}
-
 }

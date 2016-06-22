@@ -67,6 +67,7 @@ class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, 
 	}
 
 	@Override
+	@SuppressWarnings({ "CloneDoesntCallSuperClone", "CloneDeclaresCloneNotSupported" })
 	protected GpCoefficientsChromosome clone() {
 		final List<Double> clonedCoefficients = new ArrayList<>(this.coefficients);
 		return new GpCoefficientsChromosome(gpc, clonedCoefficients, this.pMutation, this.pCrossover);
@@ -75,5 +76,4 @@ class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, 
 	public List<Double> getCoefficients() {
 		return this.coefficients;
 	}
-
 }

@@ -39,11 +39,8 @@ import java.util.Set;
 public class Main {
 
 	private final static NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
-	
-	private final static int ITERATIONS_GRANULARITY = 300;
 
 	private static FileInputStream fileIn;
-
 	private static PrintWriter     fileOut;
 	
 	static {
@@ -55,11 +52,12 @@ public class Main {
 		}
 	}
 
-	private static int     iteration = 1;
+	private static int     iterations = 300;
+	private static int     iteration  = 1;
 
-	private static boolean evolved   = false;
+	private static boolean evolved    = false;
 
-	private static double  threshold = 10;
+	private static double  threshold  = 10;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Symbolic regression solver");
@@ -98,10 +96,10 @@ public class Main {
 
 		BufferedReader systemIn = new BufferedReader(new InputStreamReader(System.in));
 		for(;;) {
-			engine.evolve(ITERATIONS_GRANULARITY);
+			engine.evolve(iterations);
 			boolean terminate = true;
 			if (!evolved) {
-				System.out.println("Continue? (" + ITERATIONS_GRANULARITY + " iterations) Y/N (don't forget to press Enter)");
+				System.out.println("Continue? (" + iterations + " iterations) Y/N (don't forget to press Enter)");
 				String s = systemIn.readLine();
 				if ("y".equalsIgnoreCase(s)) {
 					terminate = false;
@@ -174,6 +172,13 @@ public class Main {
 			if (s.matches("[Tt]hreshold.*")) {
 				s = s.replaceAll("[Tt]hreshold\\s*=(.*)", "$1").trim();
 				threshold = numberFormat.parse(s).doubleValue();
+				s = inputReader.readLine();
+				continue;
+			}
+
+			if (s.matches("[Ii]terations.*")) {
+				s = s.replaceAll("[Ii]terations\\s*=(.*)", "$1").trim();
+				iterations = numberFormat.parse(s).intValue();
 				s = inputReader.readLine();
 				continue;
 			}

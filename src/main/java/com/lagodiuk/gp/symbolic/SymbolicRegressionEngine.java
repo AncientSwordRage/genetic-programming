@@ -29,7 +29,7 @@ public class SymbolicRegressionEngine {
 
 	private final static int INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT = 1;
 	private final static int DEFAULT_POPULATION_SIZE                  = 5;
-	private final static int MAX_INITIAL_TREE_DEPTH                   = +011;
+	private final static int MAX_INITIAL_TREE_DEPTH                   = 1;
 
 	private final GeneticAlgorithm<GpChromosome, Double> environment;
 	private final SymbolicRegressionFitness              fitnessFunction;
@@ -40,10 +40,10 @@ public class SymbolicRegressionEngine {
 		this.context           = new Context(baseFunctions, variables);
 		this.expressionFitness = expressionFitness;
 		this.fitnessFunction   = new SymbolicRegressionFitness(this.expressionFitness);
-		final Population<GpChromosome, Double> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
+		final Population<GpChromosome, Double> population = createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunction);
 		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
-		this.environment.setAsync(true);
+		this.environment.setAsync(false);
 	}
 
 	private Population<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {

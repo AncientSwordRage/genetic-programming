@@ -34,6 +34,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 	private Expression syntaxTree;
 
 	private final Fitness<GpChromosome, Double> fitnessFunction;
+	boolean isTreeOptimized = false;
 
 	Context context;
 	final Random random = new Random();
@@ -57,14 +58,16 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		Expression thisRandomSubTreeClone    = thisRandomNode.clone();
 		Expression anotherRandomSubTreeClone = anotherRandomNode.clone();
 
-		this.swapNode(thisRandomNode, anotherRandomSubTreeClone);
+		this.swapNode(thisRandomNode,    anotherRandomSubTreeClone);
 		this.swapNode(anotherRandomNode, thisRandomSubTreeClone);
 
 		ret.add(thisClone);
 		ret.add(anotherClone);
 
-		thisClone.optimizeTree();
-		anotherClone.optimizeTree();
+		thisClone.isTreeOptimized    = false;
+		anotherClone.isTreeOptimized = false;
+		// thisClone.optimizeTree();
+		// anotherClone.optimizeTree();
 
 		return ret;
 	}
@@ -98,7 +101,8 @@ class GpChromosome implements Chromosome<GpChromosome> {
 				break;
 		}
 
-		ret.optimizeTree();
+		ret.isTreeOptimized = false;
+		// ret.optimizeTree();
 		return ret;
 	}
 
@@ -229,9 +233,10 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		this.optimizeTree(OPTIMIZING_TREE_ITERATIONS);
 	}
 
-	public void optimizeTree(int iterations) {
+	public synchronized void optimizeTree(int iterations) {
 
-		SyntaxTreeUtils.cutTree(this.syntaxTree, this.context, 6);
+		isTreeOptimized = true;
+		SyntaxTreeUtils.cutTree     (this.syntaxTree, this.context, 6);
 		SyntaxTreeUtils.simplifyTree(this.syntaxTree, this.context);
 		
 		optimizeCoefficients(iterations);
@@ -242,6 +247,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		
 		if (coefficientsOfTree.size() > 0) {
 			GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree, 0.6, 0.8);
+			
 			Population<GpCoefficientsChromosome, Double> population = new Population<>();
 			for (int i = 0; i < 5; i++) {
 				population.addChromosome(coefficients.mutate());
@@ -252,13 +258,23 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 			GeneticAlgorithm<GpCoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
 
+			env.setAsync(true);
 			env.evolve(iterations);
 
 			List<Double> optimizedCoefficients = env.getBest().getCoefficients();
 
 			this.syntaxTree.setCoefficientsOfTree(optimizedCoefficients);
 		}
-		
+	}
+
+	private class CoefficientsFitness implements Fitness<GpCoefficientsChromosome, Double> {
+
+		@Override
+		public Double calculate(GpCoefficientsChromosome chromosome) {
+			Expression clonedSyntaxTree = GpChromosome.this.syntaxTree.clone();
+			clonedSyntaxTree.setCoefficientsOfTree(chromosome.getCoefficients());
+			return GpChromosome.this.fitnessFunction.calculate(GpChromosome.this);
+		}
 	}
 
 	public Context getContext() {
@@ -271,14 +287,5 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 	public Expression getSyntaxTree() {
 		return this.syntaxTree;
-	}
-
-	private class CoefficientsFitness implements Fitness<GpCoefficientsChromosome, Double> {
-
-		@Override
-		public Double calculate(GpCoefficientsChromosome chromosome) {
-			GpChromosome.this.syntaxTree.setCoefficientsOfTree(chromosome.getCoefficients());
-			return GpChromosome.this.fitnessFunction.calculate(GpChromosome.this);
-		}
 	}
 }
