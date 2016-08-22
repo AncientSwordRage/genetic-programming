@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.interpreter;
 
+import com.lagodiuk.gp.symbolic.api.Function;
 import java.util.List;
 
 public class SyntaxTreeUtils {

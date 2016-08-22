@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import com.lagodiuk.ga.Chromosome;
+import com.lagodiuk.ga.api.Chromosome;
 import java.util.ArrayList;
 import java.util.List;
 

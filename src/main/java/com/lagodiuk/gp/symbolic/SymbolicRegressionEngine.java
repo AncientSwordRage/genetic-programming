@@ -15,12 +15,12 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import com.lagodiuk.ga.Fitness;
-import com.lagodiuk.ga.GeneticAlgorithm;
-import com.lagodiuk.ga.Population;
+import com.lagodiuk.ga.api.Fitness;
+import com.lagodiuk.ga.internal.GeneticAlgorithm;
+import com.lagodiuk.ga.internal.Population;
+import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Function;
 import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 import java.util.Collection;
 import java.util.List;

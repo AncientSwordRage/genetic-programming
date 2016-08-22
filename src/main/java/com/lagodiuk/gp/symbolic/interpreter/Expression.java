@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.interpreter;
 
+import com.lagodiuk.gp.symbolic.api.Function;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
@@ -153,18 +154,17 @@ public class Expression implements Cloneable {
 	/**
 	 * non-recursive Breadth-first iteration over all node of syntax tree
 	 */
-	private void getAllNodesBreadthFirstSearch(List<Expression> nodesList) {
-		int indx = 0;
+	private void getAllNodesBreadthFirstSearch(List<Expression> nodesList)
+	{
+		int index = 0;
 		nodesList.add(this);
-		while (true) {
-			if (indx < nodesList.size()) {
-				Expression node = nodesList.get(indx++);
-				for (Expression child : node.childs) {
+		for(;;)
+			if(index < nodesList.size())
+			{
+				Expression node = nodesList.get(index++);
+				for(Expression child : node.childs)
 					nodesList.add(child);
-				}
-			} else {
+			} else
 				break;
-			}
-		}
 	}
 }

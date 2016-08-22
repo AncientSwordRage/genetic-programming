@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import com.lagodiuk.ga.Fitness;
+import com.lagodiuk.ga.api.Fitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 

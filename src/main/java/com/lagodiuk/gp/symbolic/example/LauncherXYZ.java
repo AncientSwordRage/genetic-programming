@@ -19,8 +19,9 @@ import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
+import com.lagodiuk.gp.symbolic.api.Functions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,9 +72,7 @@ public class LauncherXYZ {
 
 	private static <T> List<T> list(T... items) {
 		List<T> list = new LinkedList<>();
-		for (T item : items) {
-			list.add(item);
-		}
+		list.addAll(Arrays.asList(items));
 		return list;
 	}
 

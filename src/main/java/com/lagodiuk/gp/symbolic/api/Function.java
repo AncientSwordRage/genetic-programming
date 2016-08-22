@@ -13,28 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic.interpreter;
+package com.lagodiuk.gp.symbolic.api;
 
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.List;
 
-public interface Function {
-
-	double eval(Expression expression, Context context);
-
-	int argumentsCount();
-
-	boolean isVariable();
-
-	boolean isNumber();
-
-	boolean isCommutative();
-
-	String print(Expression expression);
-
+public interface Function
+{
+	double       eval(Expression expression, Context context);
+	int          argumentsCount();
+	boolean      isVariable();
+	boolean      isNumber();
+	boolean      isCommutative();
+	String       print(Expression expression);
 	List<Double> getCoefficients(Expression expression);
-
-	void setCoefficients(Expression expression, List<Double> coefficients, int startIndex);
-
-	int coefficientsCount();
-
+	void         setCoefficients(Expression expression, List<Double> coefficients, int startIndex);
+	int          coefficientsCount();
 }

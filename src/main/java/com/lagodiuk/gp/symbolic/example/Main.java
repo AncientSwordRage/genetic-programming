@@ -15,13 +15,14 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.example;
 
+import com.lagodiuk.gp.symbolic.Defaults;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
+import com.lagodiuk.gp.symbolic.api.Function;
+import com.lagodiuk.gp.symbolic.api.Functions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Function;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,7 +39,7 @@ import java.util.Set;
 
 public class Main {
 
-	private final static NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
+	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 
 	private static FileInputStream fileIn;
 	private static PrintWriter     fileOut;
@@ -52,12 +53,12 @@ public class Main {
 		}
 	}
 
-	private static int     iterations = 300;
+	private static int     iterations = Defaults.ITERATIONS;
 	private static int     iteration  = 1;
 
 	private static boolean evolved    = false;
 
-	private static double  threshold  = 10;
+	private static double  threshold  = Defaults.THRESHOLD;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Symbolic regression solver");

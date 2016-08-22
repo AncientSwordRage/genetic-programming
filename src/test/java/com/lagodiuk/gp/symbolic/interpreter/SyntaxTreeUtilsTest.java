@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.interpreter;
 
+import com.lagodiuk.gp.symbolic.api.Functions;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;

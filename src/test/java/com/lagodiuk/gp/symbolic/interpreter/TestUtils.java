@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.interpreter;
 
+import com.lagodiuk.gp.symbolic.api.Function;
+import com.lagodiuk.gp.symbolic.api.Functions;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,17 +51,13 @@ public class TestUtils {
 
 	public static <T> List<T> list(T... elements) {
 		List<T> list = new LinkedList<>();
-		for (T elem : elements) {
-			list.add(elem);
-		}
+		list.addAll(Arrays.asList(elements));
 		return list;
 	}
 
 	public static <T> Set<T> setFromArray(T... elements) {
 		Set<T> list = new HashSet<>();
-		for (T elem : elements) {
-			list.add(elem);
-		}
+		list.addAll(Arrays.asList(elements));
 		return list;
 	}
 
