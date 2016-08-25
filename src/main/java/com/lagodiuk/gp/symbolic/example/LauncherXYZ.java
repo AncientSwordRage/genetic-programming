@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.example;
 
-import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
-import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
-import com.lagodiuk.gp.symbolic.api.Functions;
+import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
+import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -57,7 +57,7 @@ public class LauncherXYZ {
 			@Override
 			public void update(SymbolicRegressionEngine engine) {
 				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-				double currFitValue = engine.fitness(bestSyntaxTree);
+				double currFitValue = engine.getFitness(bestSyntaxTree);
 				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
 					System.out.println("Func = " + bestSyntaxTree.print());
 				}

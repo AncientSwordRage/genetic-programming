@@ -16,7 +16,7 @@
 package com.lagodiuk.gp.symbolic.interpreter;
 
 import com.lagodiuk.gp.symbolic.api.Function;
-import com.lagodiuk.gp.symbolic.api.Functions;
+import com.lagodiuk.gp.symbolic.core.Functions;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -15,13 +15,10 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
-import com.lagodiuk.gp.symbolic.Defaults;
-import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
-import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
-import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
-import com.lagodiuk.gp.symbolic.Target;
 import com.lagodiuk.gp.symbolic.api.Function;
-import com.lagodiuk.gp.symbolic.api.Functions;
+import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
+import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -79,7 +76,7 @@ public class Main {
 			@Override
 			public void update(SymbolicRegressionEngine engine) {
 				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-				double currFitValue = engine.fitness(bestSyntaxTree);
+				double currFitValue = engine.getFitness(bestSyntaxTree);
 
 				outPrintln(String.format("%s\t%8.3f\t# %s%s", iteration, currFitValue, prefix, bestSyntaxTree.print()));
 				iteration += 1;

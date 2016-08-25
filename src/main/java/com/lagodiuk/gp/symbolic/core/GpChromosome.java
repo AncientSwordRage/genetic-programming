@@ -28,9 +28,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-class GpChromosome implements Chromosome<GpChromosome> {
+public class GpChromosome implements Chromosome<GpChromosome> {
 
-	private final static int OPTIMIZING_TREE_ITERATIONS = 70;
+	private final static int OPTIMIZING_TREE_ITERATIONS = 50;
 	private Expression syntaxTree;
 
 	private final Fitness<GpChromosome, Double> fitnessFunction;
@@ -245,7 +245,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 	public void optimizeCoefficients(int iterations) {
 		List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
 		
-		if (coefficientsOfTree.size() > 0) {
+		if (!coefficientsOfTree.isEmpty()) {
 			GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree, 0.6, 0.8);
 			
 			GeneticPopulation<GpCoefficientsChromosome, Double> population = new GeneticPopulation<>();

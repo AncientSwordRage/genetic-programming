@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic.api;
+package com.lagodiuk.gp.symbolic.core;
 
+import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.LinkedList;

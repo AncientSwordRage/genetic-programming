@@ -20,21 +20,23 @@ import com.lagodiuk.gp.symbolic.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
-class SymbolicRegressionFitness implements Fitness<GpChromosome, Double> {
-
+class SymbolicRegressionFitness implements Fitness<GpChromosome, Double>
+{
 	private final ExpressionFitness expressionFitness;
 
-	public SymbolicRegressionFitness(ExpressionFitness expressionFitness) {
+	public SymbolicRegressionFitness(ExpressionFitness expressionFitness)
+	{
 		this.expressionFitness = expressionFitness;
 	}
 
 	@Override
-	public Double calculate(GpChromosome chromosome) {
+	public Double calculate(GpChromosome chromosome)
+	{
 		if(chromosome.isTreeOptimized == false)
 			chromosome.optimizeTree();
-		
+
 		Expression expression = chromosome.getSyntaxTree();
-		Context    context    = chromosome.getContext();
+		Context context = chromosome.getContext();
 		return this.expressionFitness.fitness(expression, context);
 	}
 }

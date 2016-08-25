@@ -15,10 +15,10 @@ package com.lagodiuk.gp.symbolic.example;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
-import com.lagodiuk.gp.symbolic.api.Functions;
+import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -73,7 +73,7 @@ public class HelloSymbolicRegression {
 		engine.addIterationListener((SymbolicRegressionEngine engine1) ->
 		{
 			Expression bestSyntaxTree = engine1.getBestSyntaxTree();
-			double currFitValue = engine1.fitness(bestSyntaxTree);
+			double currFitValue = engine1.getFitness(bestSyntaxTree);
 			// log to console
 			System.out.println(String.format("iter = %s \t fit = %s \t func = %s", engine1.getIteration(), currFitValue, bestSyntaxTree.print()));
 			// halt condition

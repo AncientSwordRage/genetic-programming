@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.api;
 
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 
-public interface SymbolicRegressionIterationListener {
-
+public interface SymbolicRegressionIterationListener
+{
 	void update(SymbolicRegressionEngine symbolicRegressionEngine);
-
 }
