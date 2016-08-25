@@ -1,3 +1,5 @@
+package com.lagodiuk.gp.symbolic.example;
+
 /*******************************************************************************
  * Copyright 2012 Yuriy Lagodiuk
  * 
@@ -13,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
 import com.lagodiuk.gp.symbolic.api.Functions;

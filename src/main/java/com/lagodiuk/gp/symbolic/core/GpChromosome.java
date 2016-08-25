@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Chromosome;
 import com.lagodiuk.ga.api.Fitness;
-import com.lagodiuk.ga.internal.GeneticAlgorithm;
-import com.lagodiuk.ga.internal.Population;
+import com.lagodiuk.ga.implementation.GeneticAlgorithm;
+import com.lagodiuk.ga.implementation.GeneticPopulation;
 import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
@@ -248,17 +248,17 @@ class GpChromosome implements Chromosome<GpChromosome> {
 		if (coefficientsOfTree.size() > 0) {
 			GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree, 0.6, 0.8);
 			
-			Population<GpCoefficientsChromosome, Double> population = new Population<>();
+			GeneticPopulation<GpCoefficientsChromosome, Double> population = new GeneticPopulation<>();
 			for (int i = 0; i < 5; i++) {
-				population.addChromosome(coefficients.mutate());
+				population.add(coefficients.mutate());
 			}
-			population.addChromosome(coefficients);
+			population.add(coefficients);
 
 			Fitness<GpCoefficientsChromosome, Double> fit = new CoefficientsFitness();
 
 			GeneticAlgorithm<GpCoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
 
-			env.setAsync(true);
+			env.getSettings().setAsync(true);
 			env.evolve(iterations);
 
 			List<Double> optimizedCoefficients = env.getBest().getCoefficients();

@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Fitness;
-import com.lagodiuk.ga.internal.GeneticAlgorithm;
-import com.lagodiuk.ga.internal.Population;
+import com.lagodiuk.ga.implementation.GeneticAlgorithm;
+import com.lagodiuk.ga.implementation.GeneticPopulation;
+import com.lagodiuk.gp.symbolic.ExpressionFitness;
+import com.lagodiuk.gp.symbolic.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
@@ -40,20 +42,20 @@ public class SymbolicRegressionEngine {
 		this.context           = new Context(baseFunctions, variables);
 		this.expressionFitness = expressionFitness;
 		this.fitnessFunction   = new SymbolicRegressionFitness(this.expressionFitness);
-		final Population<GpChromosome, Double> population = createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
+		final GeneticPopulation<GpChromosome, Double> population = createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunction);
-		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
-		this.environment.setAsync(false);
+		this.environment.getSettings().setParentSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
+		this.environment.getSettings().setAsync(false);
 	}
 
-	private Population<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {
-		Population<GpChromosome, Double> population = new Population<>();
+	private GeneticPopulation<GpChromosome, Double> createPopulation(Context context, Fitness<GpChromosome, Double> fitnessFunction, int populationSize) {
+		GeneticPopulation<GpChromosome, Double> population = new GeneticPopulation<>();
 		for (int i = 0; i < populationSize; i++) {
 			GpChromosome chromosome = new GpChromosome(
 				context,
 				fitnessFunction,
 				SyntaxTreeUtils.createTree(MAX_INITIAL_TREE_DEPTH, context));
-			population.addChromosome(chromosome);
+			population.add(chromosome);
 		}
 		return population;
 	}
@@ -87,6 +89,6 @@ public class SymbolicRegressionEngine {
 	}
 
 	public void setParentsSurviveCount(int n) {
-		this.environment.setParentChromosomesSurviveCount(n);
+		this.environment.getSettings().setParentSurviveCount(n);
 	}
 }

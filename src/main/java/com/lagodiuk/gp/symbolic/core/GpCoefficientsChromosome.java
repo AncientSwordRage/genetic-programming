@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Chromosome;
 import java.util.ArrayList;

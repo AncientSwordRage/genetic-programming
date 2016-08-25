@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
+
 public interface SymbolicRegressionIterationListener {
 
 	void update(SymbolicRegressionEngine symbolicRegressionEngine);
