@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.api;
 
-import com.lagodiuk.gp.symbolic.interpreter.Context;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-
-public interface ExpressionFitness
+public final class SymbolicRegressionDefaults
 {
-	double fitness(Expression expression, Context context);
+	public static final int    ITERATIONS = 30000;
+	public static final double THRESHOLD  = 1.0;
+	
+	public static final int    INITIAL_PARENT_SURVIVE_COUNT = 1;
+	public static final int    DEFAULT_POPULATION_SIZE      = 10;
+	public static final int    INITIAL_TREE_DEPTH       = 1;
 }

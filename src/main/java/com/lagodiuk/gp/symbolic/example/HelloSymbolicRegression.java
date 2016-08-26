@@ -17,8 +17,8 @@ package com.lagodiuk.gp.symbolic.example;
  ******************************************************************************/
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
-import com.lagodiuk.gp.symbolic.core.Functions;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -58,7 +58,7 @@ public class HelloSymbolicRegression {
 						// define variables
 						list("x"),
 						// define base functions
-						list(Functions.ADD, Functions.SUB, Functions.MUL, Functions.VARIABLE, Functions.CONSTANT));
+list(SymbolicRegressionFunctions.ADD, SymbolicRegressionFunctions.SUB, SymbolicRegressionFunctions.MUL, SymbolicRegressionFunctions.VARIABLE, SymbolicRegressionFunctions.CONSTANT));
 
 		addListener(engine);
 
@@ -70,15 +70,16 @@ public class HelloSymbolicRegression {
 	 * Track each iteration
 	 */
 	private static void addListener(SymbolicRegressionEngine engine) {
-		engine.addIterationListener((SymbolicRegressionEngine engine1) ->
+		engine.addIterationListener((algorithm) ->
 		{
-			Expression bestSyntaxTree = engine1.getBestSyntaxTree();
-			double currFitValue = engine1.getFitness(bestSyntaxTree);
+			final SymbolicRegressionEngine sre = (SymbolicRegressionEngine)algorithm;
+			Expression bestSyntaxTree = sre.getBestSyntaxTree();
+			double currFitValue = sre.getFitness(bestSyntaxTree);
 			// log to console
-			System.out.println(String.format("iter = %s \t fit = %s \t func = %s", engine1.getIteration(), currFitValue, bestSyntaxTree.print()));
+			System.out.println(String.format("iter = %s \t fit = %s \t func = %s", sre.getIteration(), currFitValue, bestSyntaxTree.print()));
 			// halt condition
 			if(currFitValue < 5)
-				engine1.terminate();
+				algorithm.terminate();
 		});
 	}
 

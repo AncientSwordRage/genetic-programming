@@ -15,9 +15,9 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.example;
 
-import com.lagodiuk.gp.symbolic.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.ExpressionFitness;
 
 public class TestExpressionFitness2 implements ExpressionFitness {
 

@@ -16,7 +16,7 @@
 package com.lagodiuk.gp.symbolic.interpreter;
 
 import com.lagodiuk.gp.symbolic.api.Function;
-import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -30,23 +30,23 @@ public class TestUtils {
 	}
 
 	public static Expression variableExpr(String x) {
-		return new Expression(Functions.VARIABLE).setVariable(x);
+		return new Expression(SymbolicRegressionFunctions.VARIABLE).setVariable(x);
 	}
 
 	public static Expression constantExpr(double value) {
-		return new Expression(Functions.CONSTANT).setCoefficientsOfNode(list(value));
+		return new Expression(SymbolicRegressionFunctions.CONSTANT).setCoefficientsOfNode(list(value));
 	}
 
 	public static Expression subExpr(Expression left, Expression right) {
-		return new Expression(Functions.SUB).setChilds(list(left, right));
+		return new Expression(SymbolicRegressionFunctions.SUB).setChilds(list(left, right));
 	}
 
 	public static Expression addExpr(Expression left, Expression right) {
-		return new Expression(Functions.ADD).setChilds(list(left, right));
+		return new Expression(SymbolicRegressionFunctions.ADD).setChilds(list(left, right));
 	}
 
 	public static Expression powExpr(Expression left, Expression right) {
-		return new Expression(Functions.POW).setChilds(list(left, right));
+		return new Expression(SymbolicRegressionFunctions.POW).setChilds(list(left, right));
 	}
 
 	public static <T> List<T> list(T... elements) {

@@ -21,7 +21,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.LinkedList;
 import java.util.List;
 
-public enum Functions implements Function
+public enum SymbolicRegressionFunctions implements Function
 {
 	CONSTANT(true,  0, 1, null)
 	{
@@ -184,14 +184,14 @@ public enum Functions implements Function
 	private final int     coefficientsCount;
 	private final int     argumentsCount;
 	private final String  format;
-	private Functions(boolean commutative, int argumentsCount, int coefficientsCount, String format)
+	private SymbolicRegressionFunctions(boolean commutative, int argumentsCount, int coefficientsCount, String format)
 	{
 		this.commutative       = commutative;
 		this.argumentsCount    = argumentsCount;
 		this.coefficientsCount = coefficientsCount;
 		this.format            = format;
 	}
-	private Functions()
+	private SymbolicRegressionFunctions()
 	{
 		this.commutative       = false;
 		this.argumentsCount    = 2;

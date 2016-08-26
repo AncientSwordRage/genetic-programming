@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic.api;
+package com.lagodiuk.gp.symbolic.interpreter;
 
-import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
-
-public interface SymbolicRegressionIterationListener
+public interface ExpressionFitness
 {
-	void onNewGeneration(SymbolicRegressionEngine engine);
+	double fitness(Expression expression, Context context);
 }

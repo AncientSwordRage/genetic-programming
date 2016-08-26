@@ -16,7 +16,7 @@
 package com.lagodiuk.gp.symbolic.interpreter;
 
 import com.lagodiuk.gp.symbolic.api.Function;
-import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
@@ -32,7 +32,7 @@ public class SyntaxTreeTest {
 
 	@Test
 	public void testTerminal() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression const7 = constantExpr(7);
 		assertEquals("7.0", const7.print());
@@ -58,7 +58,7 @@ public class SyntaxTreeTest {
 
 	@Test
 	public void testComplex() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression const7 = constantExpr(7);
 
@@ -76,7 +76,7 @@ public class SyntaxTreeTest {
 
 	@Test
 	public void testComplex2() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression varX = variableExpr("x");
 		Expression varY = variableExpr("y");
@@ -101,10 +101,10 @@ public class SyntaxTreeTest {
 
 	@Test
 	public void testClone() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
-		Expression varX = new Expression(Functions.VARIABLE).setVariable("x");
-		Expression const5 = new Expression(Functions.CONSTANT).setCoefficientsOfNode(list(5.0));
+		Expression varX = new Expression(SymbolicRegressionFunctions.VARIABLE).setVariable("x");
+		Expression const5 = new Expression(SymbolicRegressionFunctions.CONSTANT).setCoefficientsOfNode(list(5.0));
 		Expression original = addExpr(const5, varX);
 		Expression clone = original.clone();
 

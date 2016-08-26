@@ -16,9 +16,10 @@
 package com.lagodiuk.gp.symbolic;
 
 import com.lagodiuk.gp.symbolic.api.Function;
+import com.lagodiuk.gp.symbolic.api.SymbolicRegressionDefaults;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
-import com.lagodiuk.gp.symbolic.core.Functions;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -50,12 +51,12 @@ public class Main {
 		}
 	}
 
-	private static int     iterations = Defaults.ITERATIONS;
+	private static int     iterations = SymbolicRegressionDefaults.ITERATIONS;
 	private static int     iteration  = 1;
 
 	private static boolean evolved    = false;
 
-	private static double  threshold  = Defaults.THRESHOLD;
+	private static double  threshold  = SymbolicRegressionDefaults.THRESHOLD;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Symbolic regression solver");
@@ -74,14 +75,15 @@ public class Main {
 			private double prevFitValue = -1.0;
 
 			@Override
-			public void update(SymbolicRegressionEngine engine) {
-				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-				double currFitValue = engine.getFitness(bestSyntaxTree);
+			public void onNewGeneration(SymbolicRegressionEngine engine) {
+				final SymbolicRegressionEngine sre  = (SymbolicRegressionEngine)engine;
+				final Expression               best = sre.getBestSyntaxTree();
+				final double                   fit  = sre.getFitness(best);
 
-				outPrintln(String.format("%s\t%8.3f\t# %s%s", iteration, currFitValue, prefix, bestSyntaxTree.print()));
+				outPrintln(String.format("%s\t%8.3f\t# %s%s", iteration, fit, prefix, best.print()));
 				iteration += 1;
-				this.prevFitValue = currFitValue;
-				if (currFitValue < threshold) {
+				this.prevFitValue = fit;
+				if (fit < threshold) {
 					engine.terminate();
 					evolved = true;
 				}
@@ -139,14 +141,14 @@ public class Main {
 
 	private static List<Function> getFunctions(BufferedReader inputReader) throws Exception {
 		Set<Function> functions = new HashSet<>();
-		functions.add(Functions.CONSTANT);
-		functions.add(Functions.VARIABLE);
+		functions.add(SymbolicRegressionFunctions.CONSTANT);
+		functions.add(SymbolicRegressionFunctions.VARIABLE);
 		String s = inputReader.readLine();
 		while ((s.startsWith("#")) || (s.trim().isEmpty())) {
 			s = inputReader.readLine();
 		}
 		for (String functionName : s.split("\\s+")) {
-			Function f = Functions.valueOf(functionName);
+			Function f = SymbolicRegressionFunctions.valueOf(functionName);
 			functions.add(f);
 		}
 		List<Function> functionsList = new ArrayList<>(functions);

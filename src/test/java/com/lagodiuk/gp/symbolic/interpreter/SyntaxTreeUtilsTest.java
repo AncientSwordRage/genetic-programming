@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.interpreter;
 
-import com.lagodiuk.gp.symbolic.core.Functions;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
@@ -32,7 +32,7 @@ public class SyntaxTreeUtilsTest {
 
 	@Test
 	public void simplifyTreeTest1() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression varX = variableExpr("x");
 		Expression const1 = constantExpr(1);
@@ -51,7 +51,7 @@ public class SyntaxTreeUtilsTest {
 
 	@Test
 	public void simplifyTreeTest2() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression varX = variableExpr("x");
 		Expression const1 = constantExpr(1);
@@ -71,7 +71,7 @@ public class SyntaxTreeUtilsTest {
 
 	@Test
 	public void simplifyTreeTest3() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 		Expression powExpr = powExpr(constantExpr(2), constantExpr(3));
 		assertEquals("(2.0 ^ 3.0)", powExpr.print());
 		SyntaxTreeUtils.simplifyTree(powExpr, context);
@@ -80,7 +80,7 @@ public class SyntaxTreeUtilsTest {
 
 	@Test
 	public void cutTreeTest() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 
 		Expression varX = variableExpr("x");
 		Expression const1 = constantExpr(1);
@@ -99,7 +99,7 @@ public class SyntaxTreeUtilsTest {
 
 	@Test
 	public void generateRandomTreeTest() {
-		Context context = createContext(Functions.values());
+		Context context = createContext(SymbolicRegressionFunctions.values());
 		context.setVariable("x", 0);
 		context.setVariable("y", 0);
 

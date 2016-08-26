@@ -18,8 +18,8 @@ package com.lagodiuk.gp.symbolic.example;
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
 import com.lagodiuk.gp.symbolic.Target;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
-import com.lagodiuk.gp.symbolic.core.Functions;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -37,21 +37,23 @@ public class Launcher2 {
 						new Target().when("x", 4).targetIs((4 * 4) + 4),
 						new Target().when("x", 5).targetIs((5 * 5) + 5),
 						new Target().when("x", 6).targetIs((6 * 6) + 6));
-		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitnessFunction, list("x"), list(Functions.values()));
+		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitnessFunction, list("x"), list(SymbolicRegressionFunctions.values()));
 
 		engine.addIterationListener(new SymbolicRegressionIterationListener() {
 			private double prevFitValue = -1;
 
 			@Override
-			public void update(SymbolicRegressionEngine engine) {
-				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-				double currFitValue = engine.getFitness(bestSyntaxTree);
-				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println("Func = " + bestSyntaxTree.print());
+			public void onNewGeneration(SymbolicRegressionEngine engine) {
+				final SymbolicRegressionEngine sre  = (SymbolicRegressionEngine)engine;
+				final Expression               best = sre.getBestSyntaxTree();
+				final double                   fit  = sre.getFitness(best);
+				
+				if (Double.compare(fit, this.prevFitValue) != 0) {
+					System.out.println("Func = " + best.print());
 				}
-				System.out.println(String.format("%s \t %s", engine.getIteration(), currFitValue));
-				this.prevFitValue = currFitValue;
-				if (currFitValue < 10) {
+				System.out.println(String.format("%s \t %s", engine.getIteration(), fit));
+				this.prevFitValue = fit;
+				if (fit < 10) {
 					engine.terminate();
 				}
 			}

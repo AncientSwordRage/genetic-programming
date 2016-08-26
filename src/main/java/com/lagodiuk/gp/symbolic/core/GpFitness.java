@@ -16,15 +16,15 @@
 package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Fitness;
-import com.lagodiuk.gp.symbolic.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.ExpressionFitness;
 
-class SymbolicRegressionFitness implements Fitness<GpChromosome, Double>
+class GpFitness implements Fitness<GpChromosome, Double>
 {
 	private final ExpressionFitness expressionFitness;
 
-	public SymbolicRegressionFitness(ExpressionFitness expressionFitness)
+	public GpFitness(ExpressionFitness expressionFitness)
 	{
 		this.expressionFitness = expressionFitness;
 	}

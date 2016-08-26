@@ -18,27 +18,26 @@
 package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Algorithm;
+import com.lagodiuk.ga.api.Chromosome;
 import com.lagodiuk.ga.api.IterationListener;
 import com.lagodiuk.ga.api.Population;
 import com.lagodiuk.ga.api.Settings;
 import com.lagodiuk.ga.implementation.GeneticAlgorithm;
 import com.lagodiuk.ga.implementation.GeneticPopulation;
-import com.lagodiuk.gp.symbolic.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.api.Function;
+import com.lagodiuk.gp.symbolic.api.SymbolicRegressionDefaults;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
-public class SymbolicRegressionEngine implements Algorithm<GpChromosome, Double>
+public class SymbolicRegressionEngine implements IterationListener<GpChromosome, Double>
 {
-	private final static int INITIAL_PARENT_SURVIVE_COUNT = 1;
-	private final static int DEFAULT_POPULATION_SIZE      = 10;
-	private final static int MAX_INITIAL_TREE_DEPTH       = 1;
-
-	private final SymbolicRegressionFitness              fitnessFunc;
+	private final GpFitness                              fitnessFunc;
 	private final GeneticAlgorithm<GpChromosome, Double> environment;
 	private final Context                                context;
 	private final ExpressionFitness                      expressionFitness;
@@ -46,11 +45,12 @@ public class SymbolicRegressionEngine implements Algorithm<GpChromosome, Double>
 	public SymbolicRegressionEngine(ExpressionFitness fitness, Collection<String> variables, List<? extends Function> baseFunctions)
 	{
 		this.expressionFitness = fitness;
-		this.fitnessFunc = new SymbolicRegressionFitness(this.expressionFitness);
+		this.fitnessFunc = new GpFitness(this.expressionFitness);
 		this.context     = new Context(baseFunctions, variables);
-		final Population<GpChromosome, Double> population = createPopulation(DEFAULT_POPULATION_SIZE);
+		final Population<GpChromosome, Double> population = createPopulation(SymbolicRegressionDefaults.DEFAULT_POPULATION_SIZE);
 		this.environment = new GeneticAlgorithm<>(population, fitnessFunc);
-		this.environment.getSettings().setParentSurviveCount(INITIAL_PARENT_SURVIVE_COUNT);
+		this.environment.addIterationListener((IterationListener<GpChromosome, Double>)this);
+		this.environment.getSettings().setParentSurviveCount(SymbolicRegressionDefaults.INITIAL_PARENT_SURVIVE_COUNT);
 		this.environment.getSettings().setAsync(false);
 	}
 	private Population<GpChromosome, Double> createPopulation(int populationSize)
@@ -58,25 +58,36 @@ public class SymbolicRegressionEngine implements Algorithm<GpChromosome, Double>
 		final Population<GpChromosome, Double> result = new GeneticPopulation<>();
 		for(int i = 0; i < populationSize; i += 1)
 		{
-			final Expression syntaxTree = SyntaxTreeUtils.createTree(MAX_INITIAL_TREE_DEPTH, context);
+			final Expression syntaxTree = SyntaxTreeUtils.createTree(SymbolicRegressionDefaults.INITIAL_TREE_DEPTH, context);
 			result.add(new GpChromosome(this.context, this.fitnessFunc, syntaxTree));
 		}
 		return result;
 	}
+	private final List<SymbolicRegressionIterationListener> listeners = new LinkedList<>();
 	@Override
-	public void addIterationListener(IterationListener<GpChromosome, Double> listener)
+	public void onNewGeneration(Algorithm<GpChromosome, Double> environment)
+	{
+		for(SymbolicRegressionIterationListener sril : listeners)
+			sril.onNewGeneration(this);
+	}
+	public void addIterationListener(SymbolicRegressionIterationListener listener)
+	{
+		this.listeners.add(listener);
+	}
+	public void removeIterationListener(SymbolicRegressionIterationListener listener)
+	{
+		this.listeners.remove(listener);
+	}
+	/*
+	public void addIterationListener(SymbolicRegressionIterationListener listener)
 	{
 		this.environment.addIterationListener(listener);
 	}
-	@Override
-	public void removeIterationListener(IterationListener<GpChromosome, Double> listener)
+	public void removeIterationListener(SymbolicRegressionIterationListener listener)
 	{
 		this.environment.removeIterationListener(listener);
 	}
-	public void addIterationListener(final SymbolicRegressionIterationListener listener)
-	{
-		this.environment.addIterationListener(env -> listener.update(SymbolicRegressionEngine.this));
-	}
+	*/
 	public Context getContext()
 	{
 		return this.context;
@@ -89,57 +100,46 @@ public class SymbolicRegressionEngine implements Algorithm<GpChromosome, Double>
 	{
 		return this.expressionFitness.fitness(expression, this.context);
 	}
-	@Override
 	public Settings getSettings()
 	{
 		return this.environment.getSettings();
 	}
-	@Override
 	public void evolve(int count)
 	{
 		this.environment.evolve(count);
 	}
-	@Override
 	public void evolve()
 	{
 		this.environment.evolve();
 	}
-	@Override
 	public void terminate()
 	{
 		this.environment.terminate();
 	}
-	@Override
 	public int getIteration()
 	{
 		return this.environment.getIteration();
 	}
-	@Override
 	public void resetIterations()
 	{
 		this.environment.resetIterations();
 	}
-	@Override
 	public Population<GpChromosome, Double> getPopulation()
 	{
 		return this.environment.getPopulation();
 	}
-	@Override
 	public GpChromosome getBest()
 	{
 		return this.environment.getBest();
 	}
-	@Override
 	public GpChromosome getWorst()
 	{
 		return this.environment.getWorst();
 	}
-	@Override
 	public Double getFitness(GpChromosome chromosome)
 	{
 		return this.environment.getFitness(chromosome);
 	}
-	@Override
 	public void clearCache()
 	{
 		this.environment.clearCache();

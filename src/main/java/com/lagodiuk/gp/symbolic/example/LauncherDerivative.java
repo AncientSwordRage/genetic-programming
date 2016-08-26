@@ -17,8 +17,8 @@ package com.lagodiuk.gp.symbolic.example;
 
 import com.lagodiuk.gp.symbolic.DerivativeFitness;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
-import com.lagodiuk.gp.symbolic.core.Functions;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
+import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -34,20 +34,23 @@ public class LauncherDerivative {
 			}
 		};
 		fitnessFunc.setLeft(-10).setRight(10).setStep(0.5).setDx(0.01);
-		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitnessFunc, list("x"), list(Functions.values()));
+		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitnessFunc, list("x"), list(SymbolicRegressionFunctions.values()));
+
 		engine.addIterationListener(new SymbolicRegressionIterationListener() {
 			private double prevFitValue = -1;
 
 			@Override
-			public void update(SymbolicRegressionEngine engine) {
-				Expression bestSyntaxTree = engine.getBestSyntaxTree();
-				double currFitValue = engine.getFitness(bestSyntaxTree);
-				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println("Func = " + bestSyntaxTree.print());
+			public void onNewGeneration(SymbolicRegressionEngine engine) {
+				final SymbolicRegressionEngine sre  = (SymbolicRegressionEngine)engine;
+				final Expression               best = sre.getBestSyntaxTree();
+				final double                   fit  = sre.getFitness(best);
+				
+				if (Double.compare(fit, this.prevFitValue) != 0) {
+					System.out.println("Func = " + best.print());
 				}
-				System.out.println(String.format("%s \t %s", engine.getIteration(), currFitValue));
-				this.prevFitValue = currFitValue;
-				if (currFitValue < 10) {
+				System.out.println(String.format("%s \t %s", engine.getIteration(), fit));
+				this.prevFitValue = fit;
+				if (fit < 10) {
 					engine.terminate();
 				}
 			}
