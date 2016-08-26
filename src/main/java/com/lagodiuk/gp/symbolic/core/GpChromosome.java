@@ -17,8 +17,6 @@ package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Chromosome;
 import com.lagodiuk.ga.api.Fitness;
-import com.lagodiuk.ga.implementation.GeneticAlgorithm;
-import com.lagodiuk.ga.implementation.GeneticPopulation;
 import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
@@ -26,14 +24,12 @@ import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class GpChromosome implements Chromosome<GpChromosome> {
-
-	private final static int OPTIMIZING_TREE_ITERATIONS = 50;
-	private Expression syntaxTree;
-
-	private final Fitness<GpChromosome, Double> fitnessFunction;
+	Expression syntaxTree;
+	final Fitness<GpChromosome, Double> fitnessFunction;
 	boolean isTreeOptimized = false;
 
 	Context context;
@@ -229,63 +225,80 @@ public class GpChromosome implements Chromosome<GpChromosome> {
 		oldNode.setVariable(newNode.getVariable());
 	}
 
-	public void optimizeTree() {
-		this.optimizeTree(OPTIMIZING_TREE_ITERATIONS);
+	public void optimizeTree()
+	{
+		this.optimizeTree(GpDefaults.OPTIMIZING_TREE_ITERATIONS);
 	}
-
-	public synchronized void optimizeTree(int iterations) {
+	private synchronized void optimizeTree(int iterations)
+	{
 
 		isTreeOptimized = true;
 		SyntaxTreeUtils.cutTree     (this.syntaxTree, this.context, 6);
 		SyntaxTreeUtils.simplifyTree(this.syntaxTree, this.context);
-		
 		optimizeCoefficients(iterations);
 	}
-	
-	public void optimizeCoefficients(int iterations) {
-		List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
-		
-		if (!coefficientsOfTree.isEmpty()) {
-			GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree, 0.6, 0.8);
-			
-			GeneticPopulation<GpCoefficientsChromosome, Double> population = new GeneticPopulation<>();
-			for (int i = 0; i < 5; i++) {
-				population.add(coefficients.mutate());
-			}
+	private void optimizeCoefficients(int iterations)
+	{
+		final List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
+
+		if(!coefficientsOfTree.isEmpty())
+		{
+			final GpCoefficientsPopulation population   = new GpCoefficientsPopulation();
+			final GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree,
+				GpDefaults.OPTIMIZING_TREE_PMUTATION, GpDefaults.OPTIMIZING_TREE_PCROSSOVER);
 			population.add(coefficients);
 
-			Fitness<GpCoefficientsChromosome, Double> fit = new CoefficientsFitness();
+			for (int i = 0; i < GpDefaults.OPTIMIZING_TREE_MUTATED; i++)
+				population.add(coefficients.mutate());
 
-			GeneticAlgorithm<GpCoefficientsChromosome, Double> env = new GeneticAlgorithm<>(population, fit);
+			final GpCoefficientsFitness fitness = new GpCoefficientsFitness(this);
+			final GpCoefficientsEngine  engine  = new GpCoefficientsEngine(population, fitness);
+			engine.getSettings().setAsync(GpDefaults.OPTIMIZING_TREE_ASYNC);
 
-			env.getSettings().setAsync(true);
-			env.evolve(iterations);
+			engine.evolve(iterations);
 
-			List<Double> optimizedCoefficients = env.getBest().getCoefficients();
-
+			final List<Double> optimizedCoefficients = engine.getBest().getCoefficients();
 			this.syntaxTree.setCoefficientsOfTree(optimizedCoefficients);
 		}
 	}
-
-	private class CoefficientsFitness implements Fitness<GpCoefficientsChromosome, Double> {
-
-		@Override
-		public Double calculate(GpCoefficientsChromosome chromosome) {
-			Expression clonedSyntaxTree = GpChromosome.this.syntaxTree.clone();
-			clonedSyntaxTree.setCoefficientsOfTree(chromosome.getCoefficients());
-			return GpChromosome.this.fitnessFunction.calculate(GpChromosome.this);
-		}
-	}
-
-	public Context getContext() {
+	public Context getContext()
+	{
 		return this.context;
 	}
-
-	public void setContext(Context context) {
+	public void setContext(Context context)
+	{
 		this.context = context;
 	}
-
-	public Expression getSyntaxTree() {
+	public Expression getSyntaxTree()
+	{
 		return this.syntaxTree;
+	}
+	@Override
+	public int hashCode()
+	{
+		int hash = 7;
+		hash = 89 * hash + Objects.hashCode(this.syntaxTree);
+		hash = 89 * hash + (this.isTreeOptimized ? 1 : 0);
+		// hash = 89 * hash + Objects.hashCode(this.fitnessFunction);
+		// hash = 89 * hash + Objects.hashCode(this.context);
+		return hash;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null || getClass() != obj.getClass())
+			return false;
+		final GpChromosome other = (GpChromosome)obj;
+		if(this.isTreeOptimized != other.isTreeOptimized)
+			return false;
+		/*
+		if(!Objects.equals(this.fitnessFunction, other.fitnessFunction))
+			return false;
+		if(!Objects.equals(this.context, other.context))
+			return false;
+		*/
+		return Objects.equals(this.syntaxTree, other.syntaxTree);
 	}
 }

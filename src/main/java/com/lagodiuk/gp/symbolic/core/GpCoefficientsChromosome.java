@@ -18,6 +18,7 @@ package com.lagodiuk.gp.symbolic.core;
 import com.lagodiuk.ga.api.Chromosome;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, Cloneable {
 
@@ -75,5 +76,33 @@ class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, 
 
 	public List<Double> getCoefficients() {
 		return this.coefficients;
+	}
+	@Override
+	public int hashCode()
+	{
+		int hash = 3;
+		// hash = 43 * hash + Objects.hashCode(this.gpc);
+		hash = 43 * hash + Objects.hashCode(this.coefficients);
+		// hash = 43 * hash + (int)(Double.doubleToLongBits(this.pMutation)  ^ (Double.doubleToLongBits(this.pMutation)  >>> 32));
+		// hash = 43 * hash + (int)(Double.doubleToLongBits(this.pCrossover) ^ (Double.doubleToLongBits(this.pCrossover) >>> 32));
+		return hash;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+			return true;
+		if(obj == null || getClass() != obj.getClass())
+			return false;
+		final GpCoefficientsChromosome other = (GpCoefficientsChromosome)obj;
+		/*
+		if(Double.doubleToLongBits(this.pMutation)  != Double.doubleToLongBits(other.pMutation))
+			return false;
+		if(Double.doubleToLongBits(this.pCrossover) != Double.doubleToLongBits(other.pCrossover))
+			return false;
+		if(!Objects.equals(this.gpc, other.gpc))
+			return false;
+		*/
+		return Objects.equals(this.coefficients, other.coefficients);
 	}
 }
