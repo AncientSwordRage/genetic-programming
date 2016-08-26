@@ -34,14 +34,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
+  
 public class Main {
 
 	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 
 	private static FileInputStream fileIn;
 	private static PrintWriter     fileOut;
-	
+
 	static {
 		try
 		{

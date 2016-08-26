@@ -18,7 +18,6 @@
 package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.api.Algorithm;
-import com.lagodiuk.ga.api.Chromosome;
 import com.lagodiuk.ga.api.IterationListener;
 import com.lagodiuk.ga.api.Population;
 import com.lagodiuk.ga.api.Settings;

@@ -62,11 +62,8 @@ public class Launcher2 {
 		engine.evolve(200);
 		System.out.println(engine.getBestSyntaxTree().print());
 	}
-
-	private static <T> List<T> list(T... items) {
-		List<T> list = new LinkedList<>();
-		list.addAll(Arrays.asList(items));
-		return list;
+	private static <T> List<T> list(T... items)
+	{
+		return new LinkedList<>(Arrays.asList(items));
 	}
-
 }
