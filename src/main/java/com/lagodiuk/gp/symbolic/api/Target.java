@@ -13,38 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.lagodiuk.gp.symbolic;
+package com.lagodiuk.gp.symbolic.api;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Target {
-	private final Map<String, Double> contextState = new HashMap<>();
+public class Target
+{
+	private final  Map<String, Double> contextState = new HashMap<>();
 	private double targetValue;
-
-	public Target() {
+	public Target()
+	{
 	}
-
-	public Target(Map<String, Double> contextState, double targetValue) {
+	public Target(Map<String, Double> contextState, double targetValue)
+	{
 		this.contextState.putAll(contextState);
 		this.targetValue = targetValue;
 	}
-
-	public Target when(String variableName, double variableValue) {
+	public Target when(String variableName, double variableValue)
+	{
 		this.contextState.put(variableName, variableValue);
 		return this;
 	}
-
-	public Target targetIs(double targetValue) {
+	public Target targetIs(double targetValue)
+	{
 		this.targetValue = targetValue;
 		return this;
 	}
-
-	public double getTargetValue() {
+	public double getTargetValue()
+	{
 		return this.targetValue;
 	}
-
-	public Map<String, Double> getContextState() {
+	public Map<String, Double> getContextState()
+	{
 		return this.contextState;
 	}
 }

@@ -17,13 +17,13 @@ package com.lagodiuk.gp.symbolic.core;
 
 import com.lagodiuk.ga.implementation.GeneticAlgorithm;
 
-class GpCoefficientsEngine extends GeneticAlgorithm<GpCoefficientsChromosome, Double>
+class CoefficientsEngine extends GeneticAlgorithm<CoefficientsChromosome, Double>
 {
-	GpCoefficientsEngine(GpCoefficientsFitness fitness)
+	CoefficientsEngine(CoefficientsFitness fitness)
 	{
 		super(fitness);
 	}
-	GpCoefficientsEngine(GpCoefficientsPopulation population, GpCoefficientsFitness fitness)
+	CoefficientsEngine(CoefficientsPopulation population, CoefficientsFitness fitness)
 	{
 		super(population, fitness);
 	}

@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic;
 
+import com.lagodiuk.gp.symbolic.api.Target;
 import com.lagodiuk.gp.symbolic.api.Function;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionDefaults;
 import com.lagodiuk.gp.symbolic.api.SymbolicRegressionIterationListener;
@@ -34,7 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-  
+
 public class Main {
 
 	private static final NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);

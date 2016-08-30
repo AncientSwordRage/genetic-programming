@@ -16,7 +16,7 @@ package com.lagodiuk.gp.symbolic.example;
  * limitations under the License.
  ******************************************************************************/
 import com.lagodiuk.gp.symbolic.TabulatedFunctionFitness;
-import com.lagodiuk.gp.symbolic.Target;
+import com.lagodiuk.gp.symbolic.api.Target;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionEngine;
 import com.lagodiuk.gp.symbolic.core.SymbolicRegressionFunctions;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;

@@ -15,8 +15,21 @@
  ******************************************************************************/
 package com.lagodiuk.gp.symbolic.core;
 
-import com.lagodiuk.ga.implementation.GeneticPopulation;
+import com.lagodiuk.ga.api.Fitness;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
-class GpCoefficientsPopulation extends GeneticPopulation<GpCoefficientsChromosome, Double>
+class CoefficientsFitness implements Fitness<CoefficientsChromosome, Double>
 {
+	private final GpChromosome chromosome;
+	CoefficientsFitness(GpChromosome chromosome)
+	{
+		this.chromosome = chromosome;
+	}
+	@Override
+	public Double calculate(CoefficientsChromosome coefficientsChromosome)
+	{
+		final Expression clonedSyntaxTree = chromosome.syntaxTree.clone();
+		clonedSyntaxTree.setCoefficientsOfTree(coefficientsChromosome.getCoefficients());
+		return chromosome.fitnessFunction.calculate(chromosome);
+	}
 }

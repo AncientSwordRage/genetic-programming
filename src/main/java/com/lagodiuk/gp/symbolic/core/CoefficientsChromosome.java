@@ -20,69 +20,67 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, Cloneable {
-
+class CoefficientsChromosome implements Chromosome<CoefficientsChromosome>, Cloneable
+{
 	private final GpChromosome gpc;
 	private final List<Double> coefficients;
-
 	private final double pMutation;
 	private final double pCrossover;
 
-	public GpCoefficientsChromosome(GpChromosome gpc, List<Double> coefficients, double pMutation, double pCrossover) {
-		this.gpc          = gpc;
+	public CoefficientsChromosome(GpChromosome gpc, List<Double> coefficients, double pMutation, double pCrossover)
+	{
+		this.gpc = gpc;
 		this.coefficients = coefficients;
-		this.pMutation    = pMutation;
-		this.pCrossover   = pCrossover;
+		this.pMutation = pMutation;
+		this.pCrossover = pCrossover;
 	}
-
 	@Override
-	public List<GpCoefficientsChromosome> crossover(GpCoefficientsChromosome anotherChromosome) {
-		List<GpCoefficientsChromosome> ret = new ArrayList<>(2);
+	public List<CoefficientsChromosome> crossover(CoefficientsChromosome anotherChromosome)
+	{
+		List<CoefficientsChromosome> ret = new ArrayList<>(2);
 
-		GpCoefficientsChromosome thisClone    = this.clone();
-		GpCoefficientsChromosome anotherClone = anotherChromosome.clone();
+		CoefficientsChromosome thisClone    = this.clone();
+		CoefficientsChromosome anotherClone = anotherChromosome.clone();
 
-		for (int i = 0; i < thisClone.coefficients.size(); i++) {
-			if (this.gpc.random.nextDouble() > this.pCrossover) {
+		for(int i = 0; i < thisClone.coefficients.size(); i++)
+			if(this.gpc.random.nextDouble() > this.pCrossover)
+			{
 				thisClone.coefficients.set(i, anotherChromosome.coefficients.get(i));
 				anotherClone.coefficients.set(i, this.coefficients.get(i));
 			}
-		}
 		ret.add(thisClone);
 		ret.add(anotherClone);
-
 		return ret;
 	}
-
 	@Override
-	public GpCoefficientsChromosome mutate() {
-		GpCoefficientsChromosome ret = this.clone();
-		for (int i = 0; i < ret.coefficients.size(); i++) {
-			if (this.gpc.random.nextDouble() > this.pMutation) {
-				double coeff = ret.coefficients.get(i);
+	public CoefficientsChromosome mutate()
+	{
+		CoefficientsChromosome result = this.clone();
+		for(int i = 0; i < result.coefficients.size(); i++)
+			if(this.gpc.random.nextDouble() > this.pMutation)
+			{
+				double coeff = result.coefficients.get(i);
 				coeff += this.gpc.context.getRandomMutationValue();
-				ret.coefficients.set(i, coeff);
+				result.coefficients.set(i, coeff);
 			}
-		}
-		return ret;
+		return result;
 	}
-
 	@Override
 	@SuppressWarnings({ "CloneDoesntCallSuperClone", "CloneDeclaresCloneNotSupported" })
-	protected GpCoefficientsChromosome clone() {
+	protected CoefficientsChromosome clone()
+	{
 		final List<Double> clonedCoefficients = new ArrayList<>(this.coefficients);
-		return new GpCoefficientsChromosome(gpc, clonedCoefficients, this.pMutation, this.pCrossover);
+		return new CoefficientsChromosome(gpc, clonedCoefficients, this.pMutation, this.pCrossover);
 	}
-
-	public List<Double> getCoefficients() {
+	public List<Double> getCoefficients()
+	{
 		return this.coefficients;
 	}
 	@Override
 	public int hashCode()
 	{
-		int hash = 3;
+		int hash = 129 + Objects.hashCode(this.coefficients);
 		// hash = 43 * hash + Objects.hashCode(this.gpc);
-		hash = 43 * hash + Objects.hashCode(this.coefficients);
 		// hash = 43 * hash + (int)(Double.doubleToLongBits(this.pMutation)  ^ (Double.doubleToLongBits(this.pMutation)  >>> 32));
 		// hash = 43 * hash + (int)(Double.doubleToLongBits(this.pCrossover) ^ (Double.doubleToLongBits(this.pCrossover) >>> 32));
 		return hash;
@@ -94,7 +92,7 @@ class GpCoefficientsChromosome implements Chromosome<GpCoefficientsChromosome>, 
 			return true;
 		if(obj == null || getClass() != obj.getClass())
 			return false;
-		final GpCoefficientsChromosome other = (GpCoefficientsChromosome)obj;
+		final CoefficientsChromosome other = (CoefficientsChromosome)obj;
 		/*
 		if(Double.doubleToLongBits(this.pMutation)  != Double.doubleToLongBits(other.pMutation))
 			return false;

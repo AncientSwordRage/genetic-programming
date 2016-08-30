@@ -243,16 +243,16 @@ public class GpChromosome implements Chromosome<GpChromosome> {
 
 		if(!coefficientsOfTree.isEmpty())
 		{
-			final GpCoefficientsPopulation population   = new GpCoefficientsPopulation();
-			final GpCoefficientsChromosome coefficients = new GpCoefficientsChromosome(this, coefficientsOfTree,
+			final CoefficientsPopulation population   = new CoefficientsPopulation();
+			final CoefficientsChromosome coefficients = new CoefficientsChromosome(this, coefficientsOfTree,
 				GpDefaults.OPTIMIZING_TREE_PMUTATION, GpDefaults.OPTIMIZING_TREE_PCROSSOVER);
 			population.add(coefficients);
 
 			for (int i = 0; i < GpDefaults.OPTIMIZING_TREE_MUTATED; i++)
 				population.add(coefficients.mutate());
 
-			final GpCoefficientsFitness fitness = new GpCoefficientsFitness(this);
-			final GpCoefficientsEngine  engine  = new GpCoefficientsEngine(population, fitness);
+			final CoefficientsFitness fitness = new CoefficientsFitness(this);
+			final CoefficientsEngine  engine  = new CoefficientsEngine(population, fitness);
 			engine.getSettings().setAsync(GpDefaults.OPTIMIZING_TREE_ASYNC);
 
 			engine.evolve(iterations);
