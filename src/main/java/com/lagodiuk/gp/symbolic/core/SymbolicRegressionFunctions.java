@@ -179,6 +179,28 @@ public enum SymbolicRegressionFunctions implements Function
 			return Math.cos(arg);
 		}
 	},
+	MAX     (true, 2, 0, "max(%s, %s)")
+	{
+		@Override
+		public double eval(Expression expression, Context context)
+		{
+			List<Expression> childs = expression.getChilds();
+			double arg1 = childs.get(0).eval(context);
+			double arg2 = childs.get(1).eval(context);
+			return Math.max(arg1, arg2);
+		}
+	},
+	MIN     (true, 2, 0, "min(%s, %s)")
+	{
+		@Override
+		public double eval(Expression expression, Context context)
+		{
+			List<Expression> childs = expression.getChilds();
+			double arg1 = childs.get(0).eval(context);
+			double arg2 = childs.get(1).eval(context);
+			return Math.min(arg1, arg2);
+		}
+	},
 	;
 	private final boolean commutative;
 	private final int     coefficientsCount;
